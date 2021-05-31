@@ -66,7 +66,7 @@ client.Green = int("3BA55C" , 16)
 client.Red = int("D72D42" , 16)
 client.Blue = int("7289DA" , 16)
 
-MongoClientLink = open("MongoClient.txt","r").readline()
+MongoClientLink = str(os.environ.get('MONGO_LINK'))
 cluster = MongoClient(MongoClientLink.strip(), ssl_cert_reqs=ssl.CERT_NONE)
 client.currencydata = cluster["Currency"]["Main"]
 client.serverprefixcluster = cluster["Settings"]["ServerPrefix"]
@@ -161,4 +161,4 @@ async def changeprefix(ctx, newprefix: str="None"):
 
 #####################################################################################################################################
 token = open("token.txt","r").readline()
-client.run(token.strip())
+client.run(str(os.environ.get('BOT_TOKEN')))
