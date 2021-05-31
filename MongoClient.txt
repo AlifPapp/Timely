@@ -1,1 +1,1 @@
-paste mongodb link here
+mongodb+srv://Zseni:PeanutButter444@timelybot.vgfyh.mongodb.net/test
