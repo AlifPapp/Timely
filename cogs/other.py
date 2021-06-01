@@ -1,0 +1,223 @@
+import discord 
+from discord.ext import commands
+
+from datetime import datetime
+from typing import Optional
+
+from discord import Embed, Member
+
+class other(commands.Cog):
+    def __init__(self, client):
+        self.client = client
+
+    @commands.Cog.listener()
+    async def on_ready(self):
+        print("other.py Loaded!")
+
+    async def cog_check(self, ctx):
+        if ctx.guild is not None: return True
+        if not ctx.author.bot: return True
+
+    # tinvite
+    @commands.command()
+    async def invite(self, ctx):
+        em = discord.Embed(title = "",
+                           description = "",
+                           colour = self.client.Blue,
+                           timestamp=datetime.utcnow())
+
+        em.add_field(name= "**Add TimelyBot**", value = "[here](https://discord.com/api/oauth2/authorize?client_id=836198930873057290&permissions=8&scope=bot)", inline=True)
+        em.add_field(name= "**SupportServer**", value = "[here](https://discord.gg/E8DnTgMvMW)", inline=True)
+
+        await ctx.send(embed = em)
+
+    # tupvote
+    @commands.command(aliases=['vote'])
+    async def upvote(self, ctx):
+        em = discord.Embed(title = "Upvote TimelyBot",
+                           description = "",
+                           colour = self.client.Blue,
+                           timestamp=datetime.utcnow())
+        em.set_thumbnail(url="https://emoji.gg/assets/emoji/BirdUpvote.gif")
+
+        em.add_field(name= "__discordbotlist.com__", value = "[Upvote](https://discord.ly/timely-3816)", inline=False)
+        em.add_field(name= "__voidbots.net__", value = "[Upvote](https://voidbots.net/bot/836198930873057290/)", inline=False)
+        em.add_field(name= "Rewards", value = "-Luck +10%\n-Baby's blood x1", inline=False)
+
+        await ctx.send(embed = em)
+
+    # tzseni
+    @commands.command(aliases=['genius','zseni'])
+    async def creator(self, ctx):
+        em = discord.Embed(title = "Zseni#5848 is my creator.",
+                           description = "Special thanx to MinuteLad for the basic idea and art.",
+                           colour = self.client.Blue,
+                           timestamp=datetime.utcnow())
+        em.set_thumbnail(url="https://imgur.com/wSnPFbH.gif")
+
+        em.add_field(name= "Youtube", value = "[here](http://bit.ly/Zseni-Youtube )", inline=True)
+        em.add_field(name= "Discord", value = "[here](https://discord.gg/SXng95f)", inline=True)
+        em.add_field(name= "Twitter", value = "[here](https://twitter.com/Zseni10)", inline=True)
+
+        await ctx.send(embed = em)
+    
+
+    # ping pong (test latency)
+    @commands.command()
+    async def ping(self, ctx):
+        await ctx.reply(f'Pong! {round(self.client.latency * 1000)}ms')
+
+    # tuserinfo <user>(optional)
+    @commands.command(aliases=['ui'])
+    async def userinfo(self, ctx, target: Optional[Member]):
+        target = target or ctx.author
+
+        em = Embed(title=f"User Info - {target}",
+                   description=target.mention,
+                   colour=target.colour)
+        em.set_thumbnail(url=target.avatar_url)
+
+        roles_string = []
+        perms_string = []
+        perms_string_allperms = "Manage Channels, Manage Emojis, Manage Server, Manage Messages, Manage Nicknames, Manage Roles, Manage Webhooks, Kick Members, Ban Members, Mention Everyone"
+        Acknowledgement = None
+        #Search for roles and its perms
+        for role in target.roles:
+            if role.name != "@everyone":
+                roles_string.append(role.mention)
+            
+            for perm, true_false in role.permissions:
+                if true_false is True:
+                    #Check if have adminsitrator perms and if checked before
+                    if perm == "administrator":
+                        if "Administrator" not in perms_string:
+                            Acknowledgement = "Server Admin"
+                    #Check for Key permissions through function
+                    check = await check_user_keypermissions(perm,perms_string)
+                    if check != None:
+                        perms_string.append(check)
+        
+        #Check if have roles.
+        roles_lenght = len(target.roles) - 1
+        if roles_lenght == 0:
+            roles_string = "None"
+        else:
+            roles_string = ", ".join(roles_string)
+
+        fields = [("Joined at", target.joined_at.strftime("%a, %b %d %Y %H:%M %p"), True),
+                  ("Created at", target.created_at.strftime("%a, %b %d %Y %H:%M %p"), True),
+                  (f"Roles[{roles_lenght}]",roles_string, False)]
+        
+        #Check if Server Owner or Server Admin. if so give allperms. if not but have perms append Key Permissions
+        perms_lenght = len(perms_string)
+        if ctx.guild.owner == target or Acknowledgement == "Server Admin":
+            perms_string = perms_string_allperms
+            fields.append(("Key Permissions", perms_string, False))
+        else:
+            if perms_lenght != 0:
+                perms_string = ", ".join(perms_string)
+                fields.append(("Key Permissions", perms_string, False))
+
+        #Check if Server Owner or Server Admin. If so give Acknowledgement
+        if Acknowledgement == "Server Admin":
+            fields.append(("Acknowledgements", Acknowledgement, False))
+        if ctx.guild.owner == target:
+            Acknowledgement = "Server Owner"
+            fields.append(("Acknowledgements", Acknowledgement, False))
+
+
+        for name, value, inline in fields:
+        	em.add_field(name=name, value=value, inline=inline)
+
+        em.set_footer(text=f"ID: {ctx.author.id}")
+        em.timestamp = datetime.utcnow()
+
+        await ctx.reply(embed = em)
+
+    @commands.command(aliases=["si"])
+    async def serverinfo(self, ctx):
+        em = Embed(title=f"Server Info - {ctx.guild.name}",
+                  colour=ctx.guild.owner.colour)
+                
+        em.set_thumbnail(url=ctx.guild.icon_url)
+
+        statuses = [len(list(filter(lambda m: str(m.status) == "online", ctx.guild.members))),
+                    len(list(filter(lambda m: str(m.status) == "idle", ctx.guild.members))),
+                    len(list(filter(lambda m: str(m.status) == "dnd", ctx.guild.members))),
+                    len(list(filter(lambda m: str(m.status) == "offline", ctx.guild.members)))]
+
+        Members = [len(ctx.guild.members),
+                   len(list(filter(lambda m: not m.bot, ctx.guild.members))),
+                   len(list(filter(lambda m: m.bot, ctx.guild.members))),
+                   len(await ctx.guild.bans())]
+
+        Channels = [len(ctx.guild.text_channels),
+                    len(ctx.guild.voice_channels),
+                    len(ctx.guild.categories)]
+
+        Info = [ctx.guild.owner,
+                ctx.guild.created_at.strftime("%d/%m/%Y"),
+                ctx.guild.region,
+                len(ctx.guild.roles)]
+
+        fields = [("Info",f"Owner: {Info[0]}\nCreated at: {Info[1]}\nVoice region: {Info[2]}\nRoles: {Info[3]}",True),
+                  ("Channels", f"<:text_channel:846217104381575238> {Channels[0]}\n<:voice_channel:846217088535494707> {Channels[1]}\n<:category:846219026123849749> {Channels[2]}", True),
+                  ("Members", f"Total: {Members[0]}\nHumans: {Members[1]}\nBots: {Members[2]}\nBanned: {Members[3]}", True),
+                  ("Statuses", f"<:online_status:847720675866705941>{statuses[0]} <:idle_status:847720792299929620>{statuses[1]} <:dnd_status:847720837654249512> {statuses[2]}<:offline_status:847720744288256031> {statuses[3]}", True),
+                  ("\u200b", "\u200b", True)]
+
+        for name, value, inline in fields:
+            em.add_field(name=name, value=value, inline=inline)
+
+        em.set_footer(text=f"ID: {ctx.guild.id}")
+        em.timestamp = datetime.utcnow()
+
+        await ctx.reply(embed = em)
+
+
+async def check_user_keypermissions(perm,perms_string):
+    if perm == "manage_channels":
+        if "Manage Channels" not in perms_string:
+            return "Manage Channels"
+    
+    if perm == "manage_emojis":
+        if "Manage Emojis" not in perms_string:
+            return "Manage Emojis"
+    
+    if perm == "manage_guild":
+        if "Manage Server" not in perms_string:
+            return "Manage Server"
+
+    if perm == "manage_messages":
+        if "Manage Messages" not in perms_string:
+            return "Manage Messages"
+
+    if perm == "manage_nicknames":
+        if "Manage Nicknames" not in perms_string:
+            return "Manage Nicknames"
+
+    if perm == "manage_roles":
+        if "Manage Roles" not in perms_string:
+            return "Manage Roles"
+    
+    if perm == "manage_webhooks":
+        if "Manage Webhooks" not in perms_string:
+            return "Manage Webhooks"
+
+    if perm == "kick_members":
+        if "Kick Members" not in perms_string:
+            return "Kick Members"
+
+    if perm == "ban_members":
+        if "Ban Members" not in perms_string:
+            return "Ban Members"
+
+    if perm == "mention_everyone":
+        if "Mention Everyone" not in perms_string:
+            return "Mention Everyone"
+    return None
+    
+
+#####################################################################################################################################
+def setup(client):
+    client.add_cog(other(client))
