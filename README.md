@@ -6,8 +6,8 @@
 * Download ffmpeg
 * Run these commands to instal the required modules:
   * `py -3 -m pip install -U discord.py[voice]` Run in CMDPromt
-  * `pip install pymongo` Run in vsc terminal
-  * `pip install dsnpython` Run in vsc terminal
+  * `py -m pip install pymongo` Run in vsc terminal
+  * `py -m pip install dsnpython` Run in vsc terminal
   * `py -3 -m pip install -U asyncio` Run in CMDPromt
   * `py -3 -m pip install -U youtube_dl` Run in CMDPromt
 
