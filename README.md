@@ -11,8 +11,12 @@
   * `py -3 -m pip install -U asyncio` Run in CMDPromt
   * `py -3 -m pip install -U youtube_dl` Run in CMDPromt
 
-* Run the command bellow in vsc terminal to get the requirements needed so it can be hosted on HEROKU:
-  * `py -m pip freeze > requirements.txt`
+* HEROKU SETUP
+  * `py -m pip freeze > requirements.txt` Run in vsc terminal
+  * Add the build packs: 
+    * https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest
+    * https://github.com/xrisk/heroku-opus
+  * Remove any imports that is not used at the start of the script to avoid errors.
 
 **Links:**
 * TimelyBot:
