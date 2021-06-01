@@ -11,7 +11,7 @@
   * `py -3 -m pip install -U asyncio` Run in CMDPromt
   * `py -3 -m pip install -U youtube_dl` Run in CMDPromt
 
-*Run the command bellow in vsc terminal to get the requirements needed so it can be hosted on HEROKU:
+* Run the command bellow in vsc terminal to get the requirements needed so it can be hosted on HEROKU:
   * `py -m pip freeze > requirements.txt`
 
 **Links:**
