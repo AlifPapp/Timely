@@ -5,6 +5,7 @@ from discord.ext import commands
 from datetime import datetime
 
 import ssl
+import os
 from pymongo import MongoClient
 from datetime import datetime
 
