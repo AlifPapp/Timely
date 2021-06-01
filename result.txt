@@ -1,0 +1,12 @@
+Name:  Zseni_s Lair, MemberCount: 92, GuildID: 420513434996572191
+Name:  Kermit_s_world, MemberCount: 49, GuildID: 577878121215164416
+Name:  Dank Hideaway, MemberCount: 35, GuildID: 594459450895630357
+Name:  Dank Economy, MemberCount: 40, GuildID: 687142820045520955
+Name:  MinthiCult, MemberCount: 438, GuildID: 690674546168168558
+Name:  Dre_s twitch chat, MemberCount: 24, GuildID: 763031044940234753
+Name:  The Suffe, MemberCount: 19, GuildID: 792672740612112405
+Name:  Epic Gaming, MemberCount: 29, GuildID: 803234041184256063
+Name:  TimelyBot, MemberCount: 13, GuildID: 835851709884530738
+Name:  Bot Heaven, MemberCount: 34, GuildID: 838041189307121754
+Name:  ___B_o_t_s_____, MemberCount: 69, GuildID: 838104086082879538
+Name:  Henrique, MemberCount: 6, GuildID: 842823136093536279
