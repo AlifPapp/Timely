@@ -50,7 +50,7 @@ class help(commands.Cog):
 
     # thelp Music
     @help.command()
-    async def fun(self, ctx):
+    async def music(self, ctx):
         p = self.client.serverprefix
         em = discord.Embed(title = "Music commands",
                            description = "Commands for listening to music",
