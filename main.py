@@ -148,4 +148,4 @@ async def changeprefix(ctx, newprefix: str="None"):
         await ctx.reply(embed = em)
 
 #####################################################################################################################################
-client.run(str(os.environ.get('MONGO_LINK')))
+client.run(str(os.environ.get('BOT_TOKEN')))
