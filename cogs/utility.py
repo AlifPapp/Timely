@@ -155,8 +155,13 @@ class other(commands.Cog):
 
         Members = [len(ctx.guild.members),
                    len(list(filter(lambda m: not m.bot, ctx.guild.members))),
-                   len(list(filter(lambda m: m.bot, ctx.guild.members))),
-                   len(await ctx.guild.bans())]
+                   len(list(filter(lambda m: m.bot, ctx.guild.members)))]
+
+        try:
+            guild_bans_lenght = len(await ctx.guild.bans())
+        except discord.Forbidden:
+            guild_bans_lenght = f"MissingPerms"
+            return
 
         Channels = [len(ctx.guild.text_channels),
                     len(ctx.guild.voice_channels),
@@ -169,7 +174,7 @@ class other(commands.Cog):
 
         fields = [("Info",f"Owner: {Info[0]}\nCreated: {Info[1]}\nVoice region: {Info[2]}\nRoles: {Info[3]}",True),
                   ("Channels", f"<:text_channel:846217104381575238> {Channels[0]}\n<:voice_channel:846217088535494707> {Channels[1]}\n<:category:846219026123849749> {Channels[2]}", True),
-                  ("Members", f"Total: {Members[0]}\nHumans: {Members[1]}\nBots: {Members[2]}\nBanned: {Members[3]}", True),
+                  ("Members", f"Total: {Members[0]}\nHumans: {Members[1]}\nBots: {Members[2]}\nBanned: {guild_bans_lenght}", True),
                   ("Statuses", f"<:online_status:847720675866705941>{statuses[0]} <:idle_status:847720792299929620>{statuses[1]} <:dnd_status:847720837654249512> {statuses[2]}<:offline_status:847720744288256031> {statuses[3]}", True),
                   ("\u200b", "\u200b", True)]
 
@@ -227,7 +232,7 @@ class other(commands.Cog):
 async def oldest_newest(self, ctx, page, sort_type):
     page = abs(int(page))
     if page > 99: page = 99
-    
+
     x1 = x2 = x3 = x4 = x5 = x6 = x7 = x8 = x9 = x10 = None
     searchint = (page-1)*10
     for x in ctx.guild.members:
