@@ -161,7 +161,6 @@ class other(commands.Cog):
             guild_bans_lenght = len(await ctx.guild.bans())
         except discord.Forbidden:
             guild_bans_lenght = f"MissingPerms"
-            return
 
         Channels = [len(ctx.guild.text_channels),
                     len(ctx.guild.voice_channels),
