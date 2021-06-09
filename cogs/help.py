@@ -26,7 +26,7 @@ class help(commands.Cog):
                            timestamp=datetime.utcnow())
 
         em.add_field(name="Categories",value=f"> Currency\n> Music\n> Moderation\n> Config\n> Information",inline=False)
-        em.add_field(name="Usage:",value = f"`<‏‎help <category{p}`‏‏‎")
+        em.add_field(name="Usage:",value = f"`{p}<help <category>`")
 
         await ctx.send(embed = em)
 
