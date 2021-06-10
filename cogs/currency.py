@@ -355,20 +355,30 @@ class currency(commands.Cog):
             command_syntax = f"<:invisible:852047285109522442> Syntax:`{self.client.serverprefix}editusercurrency <user> <type> <amount>`"
             if None in (target, type) or edit_int == 0:
                 await basic_embed(self, ctx,f"", f"<:danger:848526668024250408> Incorrect args, use the example below.\n{command_syntax}",self.client.Red,"")
+                return
 
             targets = self.client.currencydata.find_one({"id": str(target.id)})
             if targets is None:
                 await basic_embed(self, ctx,f"", f"<:danger:848526668024250408> User doesn't exist in my database.",self.client.Red,"")
+                return
             if type == "savings":
                 target_savings_amt = targets["savings"] + edit_int
-                self.client.currencydata.update_one({"id":str(target.id)},{"$set":{"savings":target_savings_amt}})
+                try:
+                    self.client.currencydata.update_one({"id":str(target.id)},{"$set":{"savings":target_savings_amt}})
+                except OverflowError:
+                    await basic_embed(self, ctx,f"", f"<:danger:848526668024250408> OverflowError.\nTry a smaller number maybe.",self.client.Red,"")
+                    return
                 await ctx.send(f"You successfully edited {target}'s savings by {edit_int}")
             elif type == "lifespan":
                 target_savings_amt = targets["lifespan"] + edit_int
-                self.client.currencydata.update_one({"id":str(target.id)},{"$set":{"lifespan":target_savings_amt}})
+                try:
+                    self.client.currencydata.update_one({"id":str(target.id)},{"$set":{"lifespan":target_savings_amt}})
+                except OverflowError:
+                    await basic_embed(self, ctx,f"", f"<:danger:848526668024250408> OverflowError.\nTry a smaller number maybe.",self.client.Red,"")
+                    return
                 await ctx.send(f"You successfully edited {target}'s lifespan by {edit_int}")
             else: 
-                await basic_embed(self, ctx,f"", f"<:danger:848526668024250408> something went wrong.",self.client.Red,"")
+                await basic_embed(self, ctx,f"", f"<:danger:848526668024250408> Incorrect type.",self.client.Red,"")
         return
 
 async def basic_embed(self, ctx, title, description,color, footer: str=""):
