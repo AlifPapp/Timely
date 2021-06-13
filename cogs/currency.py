@@ -463,6 +463,7 @@ class currency(commands.Cog):
                                    timestamp=datetime.utcnow())
 
                 await target.send(embed = em)
+                await basic_embed(self, ctx,f"", f"<:info:848526617449070633> An account was oppened for {target}",self.client.Red,"")
 
 async def basic_embed(self, ctx, title, description,color, footer: str=""):
     em = discord.Embed(title = title,
