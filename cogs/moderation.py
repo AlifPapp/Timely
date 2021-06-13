@@ -67,12 +67,11 @@ class moderation(commands.Cog):
                 return
 
             #kick message
-            await user.send(f"You have been kicked from {ctx.guild} for {reason}")
-            await basic_embed(self, ctx,f"{user} has been successfully kicked.",
-            f"<:info:848526617449070633> {user} has been kicked! \nReason: {reason}",self.client.Red,"")
+            try: await user.send(f"You have been kicked from {ctx.guild} for {reason}")
+            except discord.Forbidden: nothing=1
+            await basic_embed(self, ctx,f"",f"<:info:848526617449070633> {user} has been kicked! \nReason: {reason}",self.client.Blue,"")
         else:
             await basic_embed(self, ctx,f"", f"<:danger:848526668024250408> You are missing the permission `kick_members`.",self.client.Red,"")
-
 
     # tban <user> <reason> <deletemessagesdays>
     @commands.command()
@@ -87,16 +86,15 @@ class moderation(commands.Cog):
                 await basic_embed(self, ctx,f"", f"<:danger:848526668024250408> No user was specified.",self.client.Red,f"{command_syntax}")
                 return
             #try to ban user
-            try:
-                await ctx.guild.ban(user=user,reason=reason,delete_message_days=delete_message_days)
+            try: await ctx.guild.ban(user=user,reason=reason,delete_message_days=delete_message_days)
             except discord.Forbidden:
                 await basic_embed(self, ctx,f"", f"<:danger:848526668024250408> I do not have the permission to ban this user.",self.client.Red,"")
                 return
 
             #ban message
-            await user.send(f"You have been banned in {ctx.guild} for {reason}")
-            await basic_embed(self, ctx,"The BAN HAMMER has striked down on another poor soul.",
-            f"<:info:848526617449070633> {user} has been banned! \nReason: {reason} \nDelete_messages_days: {delete_message_days}",self.client.Red,"")
+            try: await user.send(f"You have been banned in {ctx.guild} for {reason}")
+            except discord.Forbidden: nothing=1
+            await basic_embed(self, ctx,"",f"<:info:848526617449070633> {user} has been banned! \nReason: {reason} \nDelete_messages_days: {delete_message_days}",self.client.Blue,"")
         else:
             await basic_embed(self, ctx,f"", f"<:danger:848526668024250408> You are missing the permission `ban_members`.",self.client.Red,"")
 
@@ -125,7 +123,9 @@ class moderation(commands.Cog):
          # If userid is a banned user
         if Check == True:
             await targetguild.unban(user)
-            await basic_embed(self, ctx,f"", f"<:info:848526617449070633> {user} has been unbaned from {targetguild.name}.",self.client.Red,"")
+            try: await user.send(f"You have been unbanned in {ctx.guild}")
+            except discord.Forbidden: nothing=1
+            await basic_embed(self, ctx,f"", f"<:info:848526617449070633> {user} has been unbaned from {targetguild.name}.",self.client.Blue,"")
         else:
             await basic_embed(self, ctx,f"", f"<:danger:848526668024250408> {userid} is not found as banned users from {targetguild.name}.",self.client.Red,"")
             return
