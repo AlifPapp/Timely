@@ -464,6 +464,8 @@ class currency(commands.Cog):
 
                 await target.send(embed = em)
                 await basic_embed(self, ctx,f"", f"<:info:848526617449070633> An account was oppened for {target}",self.client.Red,"")
+                return
+            await basic_embed(self, ctx,f"", f"<:danger:848526668024250408> {target} already has an account",self.client.Red,"")
 
 async def basic_embed(self, ctx, title, description,color, footer: str=""):
     em = discord.Embed(title = title,
