@@ -26,11 +26,11 @@ class currency(commands.Cog):
     async def balance(self, ctx, target: Optional[Member]):
         await open_account(self, ctx)
         user = target or ctx.author
-        users = self.client.currencydata.find_one({"id": str(user.id)})
+        users = self.client.currencydata.find_one({"id": user.id})
         command_syntax = f"{self.client.serverprefix}balance <user>"
 
         if target is not None:
-            targets = self.client.currencydata.find_one({"id": str(target.id)})
+            targets = self.client.currencydata.find_one({"id": target.id})
             if targets is None:
                 await basic_embed(self, ctx,"", f"<:danger:848526668024250408> User doesn't exist in my database.\n{command_syntax}",self.client.Red,"")
                 return
@@ -53,11 +53,11 @@ class currency(commands.Cog):
     async def profile(self, ctx, target: Optional[Member]):
         await open_account(self, ctx)
         user = target or ctx.author
-        users = self.client.currencydata.find_one({"id": str(user.id)})
+        users = self.client.currencydata.find_one({"id": user.id})
         command_syntax = f"{self.client.serverprefix}profile <user>"
 
         if target is not None:
-            targets = self.client.currencydata.find_one({"id": str(target.id)})
+            targets = self.client.currencydata.find_one({"id": target.id})
             if targets is None:
                 await basic_embed(self, ctx,"", f"<:danger:848526668024250408> User doesn't exist in my database.\n{command_syntax}",self.client.Red,"")
                 return
@@ -91,7 +91,7 @@ class currency(commands.Cog):
             if "savings" in x:
                 savings = int(x["savings"])
                 if savings == 0: break
-                if ctx.guild.get_member(int(x['id'])) is None: break
+                if ctx.guild.get_member(x['id']) is None: break
                 cycle_int = cycle_int + 1
                 
                 if cycle_int > ((page*10) - ((page-1)*10)) or page == 1:
@@ -122,7 +122,7 @@ class currency(commands.Cog):
         time = (random.randint(1,7))
 
         if target is not None:
-            targets = self.client.currencydata.find_one({"id": str(target.id)})
+            targets = self.client.currencydata.find_one({"id": target.id})
             if targets is None:
                 await basic_embed(self, ctx,"", f"<:danger:848526668024250408> User doesn't exist in my database.",self.client.Red,"")
                 return
@@ -135,9 +135,9 @@ class currency(commands.Cog):
 
         # update values
         time_seconds = time * 86400
-        targets = self.client.currencydata.find_one({"id": str(target.id)})
+        targets = self.client.currencydata.find_one({"id": target.id})
         new_lifespan_amt = targets["lifespan"] + time_seconds
-        self.client.currencydata.update_one({"id":str(target.id)},{"$set":{"lifespan":new_lifespan_amt}})
+        self.client.currencydata.update_one({"id":target.id},{"$set":{"lifespan":new_lifespan_amt}})
 
         await asyncio.sleep(30)
         self.client.cooldown.remove(f"{ctx.author.id}pray")
@@ -156,9 +156,9 @@ class currency(commands.Cog):
         await basic_embed(self, ctx,"Daily rewards", f"{user} claimed $100!",self.client.Yellow,"")
 
         # update values
-        users = self.client.currencydata.find_one({"id": str(user.id)})
+        users = self.client.currencydata.find_one({"id": user.id})
         new_savings_amt = users["savings"] + 100
-        self.client.currencydata.update_one({"id":str(user.id)},{"$set":{"savings":new_savings_amt}})
+        self.client.currencydata.update_one({"id":user.id},{"$set":{"savings":new_savings_amt}})
 
         await asyncio.sleep(86400)
         self.client.cooldown.remove(f"{ctx.author.id}daily")
@@ -177,9 +177,9 @@ class currency(commands.Cog):
         await basic_embed(self, ctx,"Weekly rewards", f"{user} claimed $1000!",self.client.Yellow,"")
 
         # update values
-        users = self.client.currencydata.find_one({"id": str(user.id)})
+        users = self.client.currencydata.find_one({"id": user.id})
         new_savings_amt = users["savings"] + 1000
-        self.client.currencydata.update_one({"id":str(user.id)},{"$set":{"savings":new_savings_amt}})
+        self.client.currencydata.update_one({"id":user.id},{"$set":{"savings":new_savings_amt}})
 
         await asyncio.sleep(604800)
         self.client.cooldown.remove(f"{ctx.author.id}weekly")
@@ -198,9 +198,9 @@ class currency(commands.Cog):
         await basic_embed(self, ctx,"Monthly rewards", f"{user} claimed $10000!",self.client.Yellow,"")
 
         # update values
-        users = self.client.currencydata.find_one({"id": str(user.id)})
+        users = self.client.currencydata.find_one({"id": user.id})
         new_savings_amt = users["savings"] + 10000
-        self.client.currencydata.update_one({"id":str(user.id)},{"$set":{"savings":new_savings_amt}})
+        self.client.currencydata.update_one({"id":user.id},{"$set":{"savings":new_savings_amt}})
 
         await asyncio.sleep(2628000)
         self.client.cooldown.remove(f"{ctx.author.id}monthly")
@@ -237,7 +237,7 @@ class currency(commands.Cog):
         await open_account(self, ctx)
         user = ctx.author
 
-        users = self.client.currencydata.find_one({"id": str(user.id)})
+        users = self.client.currencydata.find_one({"id": user.id})
 
         if worktimes in ("max","half"):
             worktimescalc = users["lifespan"] / (6*3600)
@@ -272,8 +272,8 @@ class currency(commands.Cog):
             await ctx.reply(embed = em)
 
             #update values to database
-            self.client.currencydata.update_one({"id":str(user.id)},{"$set":{"savings":savings_amt}})
-            self.client.currencydata.update_one({"id":str(user.id)},{"$set":{"lifespan":lifespan_amt}})
+            self.client.currencydata.update_one({"id":user.id},{"$set":{"savings":savings_amt}})
+            self.client.currencydata.update_one({"id":user.id},{"$set":{"lifespan":lifespan_amt}})
 
         await asyncio.sleep(7)
         self.client.cooldown.remove(f"{ctx.author.id}work")
@@ -289,12 +289,12 @@ class currency(commands.Cog):
             await basic_embed(self, ctx,f"", f"<:danger:848526668024250408> No user was specified.",self.client.Red,f"{command_syntax}") 
             return
         
-        users = self.client.currencydata.find_one({"id": str(user.id)})
+        users = self.client.currencydata.find_one({"id": user.id})
         if users["savings"] < 1000:
             await basic_embed(self, ctx,f"", f"<:danger:848526668024250408> You need a minimum of $1000 to steal from someone.",self.client.Red,"")
             return
         
-        targets = self.client.currencydata.find_one({"id": str(target.id)})
+        targets = self.client.currencydata.find_one({"id": target.id})
         if targets is None:
             await basic_embed(self, ctx,f"", f"<:danger:848526668024250408> User doesn't exist in my database.",self.client.Red,"")
             return
@@ -328,11 +328,12 @@ class currency(commands.Cog):
             # Update user's and target's values
             savings_amt = users["savings"] + stole_amt - 1000
             target_savings_amt = targets["savings"] - stole_amt
-            self.client.currencydata.update_one({"id":str(user.id)},{"$set":{"savings":savings_amt}})
-            self.client.currencydata.update_one({"id":str(target.id)},{"$set":{"savings":target_savings_amt}})
+            self.client.currencydata.update_one({"id":user.id},{"$set":{"savings":savings_amt}})
+            self.client.currencydata.update_one({"id":target.id},{"$set":{"savings":target_savings_amt}})
 
             await ctx.reply(f"You stole **${stole_amt}** from {target}")
-            await target.send(f"{ctx.author} has stolen from you **${stole_amt}**")
+            try: await target.send(f"{ctx.author} has stolen from you **${stole_amt}**")
+            except discord.Forbidden: nothing = 1
         else:
             prison_sentence = 5 #days
             prison_sentence_seconds = 86400 * prison_sentence
@@ -344,7 +345,7 @@ class currency(commands.Cog):
             if lifespan_amt < 1:
                 await user_died(self, ctx)
                 return
-            self.client.currencydata.update_one({"id":str(user.id)},{"$set":{"lifespan":lifespan_amt}})
+            self.client.currencydata.update_one({"id":user.id},{"$set":{"lifespan":lifespan_amt}})
         
         await asyncio.sleep(300)
         self.client.cooldown.remove(f"{ctx.author.id}steal")
@@ -364,7 +365,7 @@ class currency(commands.Cog):
             await basic_embed(self, ctx,f"", f"<:danger:848526668024250408> No ammount was specified.",self.client.Red,f"{command_syntax}")
             return
 
-        users = self.client.currencydata.find_one({"id": str(user.id)})
+        users = self.client.currencydata.find_one({"id": user.id})
         if ammount == "half": 
             ammount = users["savings"]/2
         elif ammount == "max":
@@ -376,7 +377,7 @@ class currency(commands.Cog):
             await basic_embed(self, ctx,f"", f"<:danger:848526668024250408> You don't have that much money.",self.client.Red,"")
             return
 
-        targets = self.client.currencydata.find_one({"id": str(target.id)})
+        targets = self.client.currencydata.find_one({"id": target.id})
         if targets is None:
                 await basic_embed(self, ctx,f"", f"<:danger:848526668024250408> User doesn't exist in my database.",self.client.Red,"")
                 return
@@ -394,11 +395,12 @@ class currency(commands.Cog):
         
         user_savings_amt = users["savings"] - ammount
         target_savings_amt = targets["savings"] + ammount
-        self.client.currencydata.update_one({"id":str(user.id)},{"$set":{"savings":user_savings_amt}})
-        self.client.currencydata.update_one({"id":str(target.id)},{"$set":{"savings":target_savings_amt}})
+        self.client.currencydata.update_one({"id":user.id},{"$set":{"savings":user_savings_amt}})
+        self.client.currencydata.update_one({"id":target.id},{"$set":{"savings":target_savings_amt}})
 
         await ctx.reply(f"You gave {target} **${ammount}**")
-        await target.send(f"{ctx.author} has given you **${ammount}**")
+        try: await target.send(f"{ctx.author} has given you **${ammount}**")
+        except discord.Forbidden: nothing = 1
 
         await asyncio.sleep(7)
         self.client.cooldown.remove(f"{ctx.author.id}give")
@@ -417,14 +419,14 @@ class currency(commands.Cog):
                 await basic_embed(self, ctx,f"", f"<:danger:848526668024250408> Incorrect args, use the example below.\n{command_syntax}",self.client.Red,"")
                 return
 
-            targets = self.client.currencydata.find_one({"id": str(target.id)})
+            targets = self.client.currencydata.find_one({"id": target.id})
             if targets is None:
                 await basic_embed(self, ctx,f"", f"<:danger:848526668024250408> User doesn't exist in my database.",self.client.Red,"")
                 return
             if type == "savings":
                 target_savings_amt = targets["savings"] + edit_int
                 try:
-                    self.client.currencydata.update_one({"id":str(target.id)},{"$set":{"savings":target_savings_amt}})
+                    self.client.currencydata.update_one({"id":target.id},{"$set":{"savings":target_savings_amt}})
                 except OverflowError:
                     await basic_embed(self, ctx,f"", f"<:danger:848526668024250408> OverflowError.\nTry a smaller number maybe.",self.client.Red,"")
                     return
@@ -432,7 +434,7 @@ class currency(commands.Cog):
             elif type == "lifespan":
                 target_savings_amt = targets["lifespan"] + edit_int
                 try:
-                    self.client.currencydata.update_one({"id":str(target.id)},{"$set":{"lifespan":target_savings_amt}})
+                    self.client.currencydata.update_one({"id":target.id},{"$set":{"lifespan":target_savings_amt}})
                 except OverflowError:
                     await basic_embed(self, ctx,f"", f"<:danger:848526668024250408> OverflowError.\nTry a smaller number maybe.",self.client.Red,"")
                     return
@@ -450,7 +452,7 @@ class currency(commands.Cog):
                 await basic_embed(self, ctx,f"", f"<:danger:848526668024250408> No user was specified.\n{command_syntax}",self.client.Red,"")
                 return
 
-            userdata = self.client.currencydata.find_one({"id": str(target.id)})
+            userdata = self.client.currencydata.find_one({"id": target.id})
             if userdata is None:
                 DefaultTime = self.client.DefaultTime
                 users = {"id": target.id, "savings": 0, "lifespan": DefaultTime}
@@ -462,8 +464,9 @@ class currency(commands.Cog):
                                    color = self.client.Blue,
                                    timestamp=datetime.utcnow())
 
-                await target.send(embed = em)
-                await basic_embed(self, ctx,f"", f"<:info:848526617449070633> An account was oppened for {target}",self.client.Red,"")
+                try: await ctx.author.send(embed = em)
+                except discord.Forbidden: await ctx.send(embed = em)
+                await basic_embed(self, ctx,f"", f"<:info:848526617449070633> An account was oppened for {target}",self.client.Blue,"")
                 return
             await basic_embed(self, ctx,f"", f"<:danger:848526668024250408> {target} already has an account",self.client.Red,"")
 
@@ -508,7 +511,7 @@ async def calc_DHMS_lefttype(loopcycleint):
 
 async def open_account(self, ctx):
     user = ctx.author
-    userdata = self.client.currencydata.find_one({"id": str(user.id)})
+    userdata = self.client.currencydata.find_one({"id": user.id})
     if userdata is None:
         DefaultTime = self.client.DefaultTime
         users = {"id": user.id, "savings": 0, "lifespan": DefaultTime}
@@ -519,8 +522,8 @@ async def open_account(self, ctx):
                            description = f"Start using various commands to gain more time, you only have **{int(DefaultTimeDays)} days** left!",
                            color = self.client.Blue,
                            timestamp=datetime.utcnow())
-
-        await ctx.author.send(embed = em)
+        try: await ctx.author.send(embed = em)
+        except discord.Forbidden: await ctx.send(embed = em)
     return True
 
 async def user_died(self, ctx):
@@ -535,8 +538,8 @@ async def user_died(self, ctx):
     await ctx.author.send(embed = em)
     lifespan_amt = DefaultTime
     savings_amt = 0
-    self.client.currencydata.update_one({"id":str(user.id)},{"$set":{"savings":savings_amt}})
-    self.client.currencydata.update_one({"id":str(user.id)},{"$set":{"lifespan":lifespan_amt}})
+    self.client.currencydata.update_one({"id":user.id},{"$set":{"savings":savings_amt}})
+    self.client.currencydata.update_one({"id":user.id},{"$set":{"lifespan":lifespan_amt}})
     return
 #####################################################################################################################################
 def setup(client):
