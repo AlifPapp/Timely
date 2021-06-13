@@ -441,6 +441,29 @@ class currency(commands.Cog):
                 await basic_embed(self, ctx,f"", f"<:danger:848526668024250408> Incorrect type.",self.client.Red,"")
         return
 
+    # topenaccountcurrency
+    @commands.command()
+    async def openaccountcurrency(self, ctx, target: Optional[Member]):
+        if ctx.author.id in self.client.developerid:
+            command_syntax = f"<:invisible:852047285109522442> Syntax:`{self.client.serverprefix}openaccountcurrency <user>`"
+            if target is None:
+                await basic_embed(self, ctx,f"", f"<:danger:848526668024250408> No user was specified.\n{command_syntax}",self.client.Red,"")
+                return
+
+            userdata = self.client.currencydata.find_one({"id": str(target.id)})
+            if userdata is None:
+                DefaultTime = self.client.DefaultTime
+                users = {"id": target.id, "savings": 0, "lifespan": DefaultTime}
+                self.client.currencydata.insert_one(users)
+
+                DefaultTimeDays = DefaultTime/86400
+                em = discord.Embed(title = f"The clock is ticking {target.name}!",
+                                  description = f"Start using various commands to gain more time, you only have **{int(DefaultTimeDays)} days** left!",
+                                   color = self.client.Blue,
+                                   timestamp=datetime.utcnow())
+
+                await target.send(embed = em)
+
 async def basic_embed(self, ctx, title, description,color, footer: str=""):
     em = discord.Embed(title = title,
                        description = description,
@@ -485,7 +508,7 @@ async def open_account(self, ctx):
     userdata = self.client.currencydata.find_one({"id": str(user.id)})
     if userdata is None:
         DefaultTime = self.client.DefaultTime
-        users = {"id": str(user.id), "savings": 0, "lifespan": DefaultTime}
+        users = {"id": user.id, "savings": 0, "lifespan": DefaultTime}
         self.client.currencydata.insert_one(users)
 
         DefaultTimeDays = DefaultTime/86400
