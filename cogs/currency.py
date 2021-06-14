@@ -27,12 +27,12 @@ class currency(commands.Cog):
         await open_account(self, ctx)
         user = target or ctx.author
         users = self.client.currencydata.find_one({"id": user.id})
-        command_syntax = f"{self.client.serverprefix}balance <user>"
+        command_syntax = f"Syntax: {self.client.serverprefix}balance <user>"
 
         if target is not None:
             targets = self.client.currencydata.find_one({"id": target.id})
             if targets is None:
-                await basic_embed(self, ctx,"", f"<:danger:848526668024250408> User doesn't exist in my database.\n{command_syntax}",self.client.Red,"")
+                await basic_embed(self, ctx,"", f"<:danger:848526668024250408> User doesn't exist in my database.",self.client.Red,f"{command_syntax}")
                 return
 
         savings_amt = round(users["savings"])
@@ -89,15 +89,14 @@ class currency(commands.Cog):
         cycle_int = 0
         for x in list_of_users:
             if "savings" in x:
-                savings = int(x["savings"])
-                if savings == 0: break
-                if ctx.guild.get_member(x['id']) is None: break
-                cycle_int = cycle_int + 1
-                
-                if cycle_int > ((page*10) - ((page-1)*10)) or page == 1:
-                    richuser = await self.client.fetch_user(int(x['id']))
-                    rich_string += f"**${savings}** - {richuser}\n"
-                if cycle_int == int(page*10): break
+                savings = x["savings"]
+                if savings != 0:
+                    richuser = await self.client.fetch_user(x['id'])
+                    if richuser in ctx.guild.members: 
+                        cycle_int = cycle_int + 1
+                        if cycle_int > ((page*10) - ((page-1)*10)) or page == 1:
+                            rich_string += f"**${savings}** - {richuser}\n"
+                        if cycle_int == int(page*10): break
         if rich_string == "":
             await ctx.send("No one with money here.")
             return
@@ -414,9 +413,9 @@ class currency(commands.Cog):
     async def editusercurrency(self, ctx, target: Optional[Member], type: str="", edit_int: int=0):
         if ctx.author.id in self.client.developerid:
             edit_int = int(edit_int)
-            command_syntax = f"<:invisible:852047285109522442> Syntax:`{self.client.serverprefix}editusercurrency <user> <type> <amount>`"
+            command_syntax = f"Syntax: {self.client.serverprefix}editusercurrency <user> <type> <amount>"
             if None in (target, type) or edit_int == 0:
-                await basic_embed(self, ctx,f"", f"<:danger:848526668024250408> Incorrect args, use the example below.\n{command_syntax}",self.client.Red,"")
+                await basic_embed(self, ctx,f"", f"<:danger:848526668024250408> Incorrect args, use the example below.",self.client.Red,f"{command_syntax}")
                 return
 
             targets = self.client.currencydata.find_one({"id": target.id})
@@ -447,9 +446,9 @@ class currency(commands.Cog):
     @commands.command()
     async def openaccountcurrency(self, ctx, target: Optional[Member]):
         if ctx.author.id in self.client.developerid:
-            command_syntax = f"<:invisible:852047285109522442> Syntax:`{self.client.serverprefix}openaccountcurrency <user>`"
+            command_syntax = f"Syntax: {self.client.serverprefix}openaccountcurrency <user>"
             if target is None:
-                await basic_embed(self, ctx,f"", f"<:danger:848526668024250408> No user was specified.\n{command_syntax}",self.client.Red,"")
+                await basic_embed(self, ctx,f"", f"<:danger:848526668024250408> No user was specified.",self.client.Red,f"command_syntax")
                 return
 
             userdata = self.client.currencydata.find_one({"id": target.id})
@@ -464,7 +463,7 @@ class currency(commands.Cog):
                                    color = self.client.Blue,
                                    timestamp=datetime.utcnow())
 
-                try: await ctx.author.send(embed = em)
+                try: await target.send(embed = em)
                 except discord.Forbidden: await ctx.send(embed = em)
                 await basic_embed(self, ctx,f"", f"<:info:848526617449070633> An account was oppened for {target}",self.client.Blue,"")
                 return
