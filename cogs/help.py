@@ -44,6 +44,19 @@ class help(commands.Cog):
 
         await ctx.send(embed = em)
 
+    # thelp ModCurrency
+    @help.command()
+    async def devcurrency(self, ctx):
+        p = self.client.serverprefix
+        em = discord.Embed(title = "Currency Moderator commands",
+                           description = "Commands that can only be used by Timely's moderators.",
+                           colour = self.client.Green,
+                           timestamp=datetime.utcnow())
+
+        em.add_field(name="Commands:",value=f"`{p}editusercurrency`, `{p}openaccountcurrency`")
+
+        await ctx.send(embed = em)
+
     # thelp Music
     @help.command()
     async def music(self, ctx):
@@ -531,6 +544,7 @@ class help(commands.Cog):
         em.add_field(name="**Syntax**",value=f"`{p}changeprefix <newprefix>`")
 
         await ctx.send(embed = em)
+
 
 #####################################################################################################################################
 def setup(client):
