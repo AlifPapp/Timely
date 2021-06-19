@@ -70,7 +70,7 @@ initial_extensions = ['cogs.currency',
                       'cogs.moderation',
                       'cogs.music',
                       'cogs.error',
-                      #'cogs.beta'
+                      'cogs.beta'
                       'cogs.developer']
 if __name__ == '__main__':
     for extension in initial_extensions:
