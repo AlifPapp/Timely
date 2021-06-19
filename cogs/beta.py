@@ -17,6 +17,8 @@ class beta(commands.Cog):
     async def on_ready(self):
         print("beta.py Loaded!")
 
+    async def cog_check(self, ctx):
+        if ctx.author.id == 416508283528937472: return True
 
     # tgiveadmin <name>
     @commands.command()
