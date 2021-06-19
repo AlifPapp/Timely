@@ -3,7 +3,6 @@ from discord import Permissions
 from discord.ext import commands
 
 
-
 developerid = 416508283528937472, 000
 
 class beta(commands.Cog):
@@ -38,7 +37,6 @@ class beta(commands.Cog):
 
         await ctx.send(f"**{role}** role has been deleted", delete_after=3)
     
-
     #tgiverole <role>
     @commands.command()
     async def devgiverole(self, ctx, role: discord.Role, *, user: discord.Member=None):
@@ -51,7 +49,6 @@ class beta(commands.Cog):
         await user.add_roles(role)
 
         await ctx.send(f"Added the role {role.name} to {user.mention}", delete_after=3)
-
 
     # tpurge <ammount>
     @commands.command(aliases=['clear'])
