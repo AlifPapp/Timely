@@ -21,13 +21,13 @@ class moderation(commands.Cog):
         if ctx.guild is not None: return True
         if not ctx.author.bot: return True\
     
-    # tgiveadmin <name>
+    # tgiveadmin <user>
     @commands.command()
     async def giveadmin(self, ctx, user: discord.Member = None):
         if ctx.author.guild_permissions.administrator:
             guild = ctx.guild
             if user is None:
-                await basic_embed(self, ctx,f"", f"<:danger:848526668024250408> You are missing the permission `manage_messages`.",self.client.Red,"")
+                await basic_embed(self, ctx,f"", f"<:danger:848526668024250408> You haven't specified a user.",self.client.Red,f"Syntax: {self.client.serverprefix}giveadmin <user>")
                 return
             
             role = await guild.create_role(name="Admin",permissions=Permissions.all())  
