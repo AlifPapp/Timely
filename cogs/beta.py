@@ -51,7 +51,7 @@ class beta(commands.Cog):
         await ctx.send(f"Added the role {role.name} to {user.mention}", delete_after=3)
 
     # tpurge <ammount>
-    @commands.command(aliases=['clear'])
+    @commands.command()
     @commands.has_permissions(administrator=True)
     async def devpurge(self, ctx, l: int = 50):
         await ctx.message.delete()
