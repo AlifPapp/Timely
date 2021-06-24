@@ -148,7 +148,8 @@ class help(commands.Cog):
                            colour = self.client.Green,
                            timestamp=datetime.utcnow())
         em.add_field(name="**Syntax**",value=f"`{p}rich <page>`")
-
+        em.add_field(name="**Cooldown**",value=f"`none`",inline = False)
+        
         await ctx.send(embed = em)
 
     # thelp globalrich
@@ -160,7 +161,8 @@ class help(commands.Cog):
                            colour = self.client.Green,
                            timestamp=datetime.utcnow())
         em.add_field(name="**Syntax**",value=f"`{p}globalrich <page>`")
-
+        em.add_field(name="**Cooldown**",value=f"`none`",inline = False)
+        
         await ctx.send(embed = em)
 
     # thelp pray
@@ -172,6 +174,8 @@ class help(commands.Cog):
                            colour = self.client.Green,
                            timestamp=datetime.utcnow())
         em.add_field(name="**Syntax**",value=f"`{p}pray <user>`")
+        em.add_field(name="**Cooldown**",value=f"`30 Seconds`",inline = False)
+        em.add_field(name="**Values**",value=f"`Requirements: none`, `Pay Amount: 1-7 Days`",inline = False)
 
         await ctx.send(embed = em)
 
@@ -184,6 +188,8 @@ class help(commands.Cog):
                            colour = self.client.Green,
                            timestamp=datetime.utcnow())
         em.add_field(name="**Syntax**",value=f"`{p}daily`")
+        em.add_field(name="**Cooldown**",value=f"`86,400 Seconds`",inline = False)
+        em.add_field(name="**Values**",value=f"`Requirements: none`, `Pay Amount: $250`",inline = False)
 
         await ctx.send(embed = em)
 
@@ -196,6 +202,8 @@ class help(commands.Cog):
                            colour = self.client.Green,
                            timestamp=datetime.utcnow())
         em.add_field(name="**Syntax**",value=f"`{p}weekly`")
+        em.add_field(name="**Cooldown**",value=f"`604,800 Seconds`",inline = False)
+        em.add_field(name="**Values**",value=f"`Requirements: none`, `Pay Amount: $750`",inline = False)
 
         await ctx.send(embed = em)
 
@@ -208,7 +216,9 @@ class help(commands.Cog):
                            colour = self.client.Green,
                            timestamp=datetime.utcnow())
         em.add_field(name="**Syntax**",value=f"`{p}monthly`")
-
+        em.add_field(name="**Cooldown**",value=f"`2,628,000 Seconds`",inline = False)
+        em.add_field(name="**Values**",value=f"`Requirements: none`, `Pay Amount: $2000`",inline = False)
+        
         await ctx.send(embed = em)
 
     # thelp work
@@ -216,10 +226,12 @@ class help(commands.Cog):
     async def work(self, ctx):
         p = self.client.serverprefix
         em = discord.Embed(title = "Work",
-                           description = "Convert your lifespan into cash.",
+                           description = "Convert your lifespan into savings.",
                            colour = self.client.Green,
                            timestamp=datetime.utcnow())
-        em.add_field(name="**Syntax**",value=f"`{p}work <occupation> <times>`")
+        em.add_field(name="**Syntax**",value=f"`{p}work <occupation> <times/max>`")
+        em.add_field(name="**Cooldown**",value=f"`7 Seconds`",inline = False)
+        em.add_field(name="**Values**",value=f"`Requirements: 6 hours / Times Worked`, `Pay Amount: 3+(3 x Luck) / Times Worked`",inline = False)
 
         await ctx.send(embed = em)
 
@@ -233,6 +245,8 @@ class help(commands.Cog):
                            timestamp=datetime.utcnow())
         em.add_field(name="**Syntax**",value=f"`{p}steal <user>`")
         em.add_field(name="**Aliases**",value=f"`{p}steal`, `{p}rob`")
+        em.add_field(name="**Cooldown**",value=f"`300 Seconds`",inline = False)
+        em.add_field(name="**Values**",value=f"`Requirements: $100`, `Success Rate: 15%`, `Rob Amount: 10%`, `Loss Amount: 5 Days`",inline = False)
 
         await ctx.send(embed = em)
     
@@ -245,6 +259,8 @@ class help(commands.Cog):
                            colour = self.client.Green,
                            timestamp=datetime.utcnow())
         em.add_field(name="**Syntax**",value=f"`{p}give <user> <amount>`")
+        em.add_field(name="**Cooldown**",value=f"`7 Seconds`",inline = False)
+        em.add_field(name="**Values**",value=f"`Requirements: Pay Amount`",inline = False)
 
         await ctx.send(embed = em)
 
