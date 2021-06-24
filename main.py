@@ -8,7 +8,7 @@ from pymongo import MongoClient
 from datetime import datetime
 
 
-defaultprefix = ";"
+defaultprefix = "t"
 #####################################################################################################################################
 ######################################################### GET SERVER PREFIX #########################################################
 #####################################################################################################################################
@@ -56,9 +56,9 @@ client.Green = int("2EC550" , 16)
 client.Red = int("D72D42" , 16)
 client.Blue = int("7289DA" , 16)
 
-MongoClientLink = open("MongoClient.txt","r").readline()
-client.mongodb = MongoClient(MongoClientLink.strip(), ssl_cert_reqs=ssl.CERT_NONE)
-#client.mongodb = MongoClient(str(os.environ.get('MONGO_LINK')), ssl_cert_reqs=ssl.CERT_NONE)
+#MongoClientLink = open("MongoClient.txt","r").readline()
+#client.mongodb = MongoClient(MongoClientLink.strip(), ssl_cert_reqs=ssl.CERT_NONE)
+client.mongodb = MongoClient(str(os.environ.get('MONGO_LINK')), ssl_cert_reqs=ssl.CERT_NONE)
 
 #####################################################################################################################################
 ############################################################## C O G S ##############################################################
@@ -166,6 +166,6 @@ async def changeprefix(ctx, newprefix: str="None"):
         await ctx.reply(embed = em)
 
 #####################################################################################################################################
-token = open("token.txt","r").readline()
-client.run(token.strip())
-#client.run(str(os.environ.get('BOT_TOKEN')))
+#token = open("token.txt","r").readline()
+#client.run(token.strip())
+client.run(str(os.environ.get('BOT_TOKEN')))
