@@ -182,11 +182,11 @@ class currency(commands.Cog):
         if cooldown < 1:
             await open_account(self, ctx, ctx.author)
             user = ctx.author
-            await basic_embed(self, ctx,"Monthly rewards", f"{user} claimed $10000!",self.client.Yellow,"")
+            await basic_embed(self, ctx,"Monthly rewards", f"{user} claimed $2000!",self.client.Yellow,"")
 
             # update values
             users = cluster.find_one({"id": user.id})
-            new_savings_amt = users["savings"] + 2020
+            new_savings_amt = users["savings"] + 2000
             cluster.update_one({"id":user.id},{"$set":{"savings":new_savings_amt}})
             cluster.update_one({"id":user.id},{"$set":{"monthly":2628000}})
         else:
