@@ -62,7 +62,7 @@ class currency(commands.Cog):
         command_syntax = f"{self.client.serverprefix}profile <user>"
 
         if target is not None:
-            targets = cluster.find_one({"id": target.id})
+            targets = cluster.find_one({"id": user.id})
             if targets is None:
                 await ctx.reply(embed = await basic_embed("", f"<:danger:848526668024250408> User doesn't exist in my database.\n{command_syntax}",self.client.Red,""))
                 return
@@ -79,7 +79,7 @@ class currency(commands.Cog):
         result = [(f"**Luck:** {round(luck_amt,1)}"),
                   (f"**Job:** MgRonald's"),
                   (f"**Savings:** ${int(savings_amt)}"),
-                  (f"**Lifespan:** {int(lifespan_amt)}")]
+                  (f"**Lifespan:** {lifespan_amt}")]
 
         em.add_field(name="Worth",value=f"{result[0]}\n{result[1]}\n{result[2]}\n{result[3]}",inline=True)
         
@@ -673,7 +673,7 @@ async def rich_globalrich(self, ctx, type, page):
                         rich_string += f"**${savings}** - {richuser}\n"
                     if cycle_int == int(page*10): break
     if rich_string == "":
-        await ctx.send("No one with money here.")
+        await ctx.reply(embed = await basic_embed(f"", f"There is nothing here.",self.client.Red,""))
         return
         
     em = discord.Embed(color=self.client.Yellow)
