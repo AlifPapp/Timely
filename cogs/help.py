@@ -470,6 +470,7 @@ class help(commands.Cog):
                            colour = self.client.Green,
                            timestamp=datetime.utcnow())
         em.add_field(name="**Syntax**",value=f"`{p}botinfo`")
+        em.add_field(name="**Aliases**",value=f"`{p}botinfo`, `{p}bi`")
 
         await ctx.send(embed = em)
 
@@ -660,7 +661,7 @@ class help(commands.Cog):
     async def setupcounting(self, ctx):
         p = self.client.serverprefix
         em = discord.Embed(title = "Setup Counting",
-                           description = "Setup a channel to be used for counting. The bot will replace\nthe users message with a webhook version. This prevents\nusers from editing their message or deleting it.",
+                           description = "Setup a channel to be used for counting. The bot will replace the users message with a webhook version. This prevents users from editing their message or deleting it.",
                            colour = self.client.Green,
                            timestamp=datetime.utcnow())
 
