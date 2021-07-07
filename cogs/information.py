@@ -1,4 +1,5 @@
-import discord 
+import discord
+from discord.enums import VerificationLevel 
 from discord.ext import commands
 
 from datetime import datetime
@@ -61,7 +62,7 @@ class information(commands.Cog):
         t = await ctx.send(embed = em)
 
     # tbotinfo
-    @commands.command()
+    @commands.command(aliases=['bi'])
     async def botinfo(self, ctx):
         memory_total = psutil.virtual_memory()._asdict()["total"]
         memory_used = psutil.virtual_memory()._asdict()["used"]
@@ -79,7 +80,7 @@ class information(commands.Cog):
         Vars = ["<@!416508283528937472>",
                 self.client.user.created_at.strftime("%d/%m/%Y"),
                 len(self.client.guilds),
-                f"{int(memory_used/1000000)}/{int(memory_total/1000000)} ({memory_percent}%)",
+                f"{int(memory_used/1000000)}/{int(memory_total/1000000)} MB ({memory_percent}%)",
                 f"[discord.py](https://discordpy.readthedocs.io/en/latest/) {discord.__version__}",
                 f"[MongoDB](https://www.mongodb.com/)",
                 f"[Heroku](https://dashboard.heroku.com/)"]
@@ -129,9 +130,9 @@ class information(commands.Cog):
 
         join_pos = sum(m.joined_at < target.joined_at for m in ctx.guild.members if m.joined_at is not None) + 1
         creation_pos = sum(m.created_at < target.created_at for m in ctx.guild.members if m.created_at is not None) + 1
-        fields = [(f"Joined[{join_pos}/{len(ctx.guild.members)}]", target.joined_at.strftime("%a, %b %d %Y %I:%M %p"), True),
-                  (f"Created[{creation_pos}/{len(ctx.guild.members)}]", target.created_at.strftime("%a, %b %d %Y %I:%M %p"), True),
-                  (f"Roles[{roles_lenght}]",roles_string, False)]
+        fields = [(f"Joined [{join_pos}/{len(ctx.guild.members)}]", target.joined_at.strftime("%a, %b %d %Y %I:%M %p"), True),
+                  (f"Created [{creation_pos}/{len(ctx.guild.members)}]", target.created_at.strftime("%a, %b %d %Y %I:%M %p"), True),
+                  (f"Roles [{roles_lenght}]",roles_string, False)]
         
         #Check if Server Owner or Server Admin. if so give allperms. if not but have perms append Key Permissions
         perms_lenght = len(perms_string)
@@ -152,17 +153,17 @@ class information(commands.Cog):
 
         #Find what platform target is using
         status_string = ""
-        if target.desktop_status == discord.Status.online: status_string += "<:desktop_online:853461125697241108>"
-        if target.desktop_status == discord.Status.idle: status_string += "<:desktop_idle:853461158068879370>"
-        if target.desktop_status == discord.Status.dnd: status_string += "<:desktop_dnd:853461186132312105>"
+        if target.desktop_status == discord.Status.online: status_string += "<:desktop_online:862217464381177866>"
+        if target.desktop_status == discord.Status.idle: status_string += "<:desktop_idle:862217516976701499>"
+        if target.desktop_status == discord.Status.dnd: status_string += "<:desktop_dnd:862217565974429726>"
 
-        if target.mobile_status == discord.Status.online: status_string += "<:mobile_online:853458040858214400>"
-        if target.mobile_status == discord.Status.idle: status_string += "<:mobile_idle:853460184071143424>"
-        if target.mobile_status == discord.Status.dnd: status_string += "<:mobile_dnd:853460245823881256>"
+        if target.mobile_status == discord.Status.online: status_string += "<:mobile_online:862217637794545675>"
+        if target.mobile_status == discord.Status.idle: status_string += "<:mobile_idle:862217700301864960>"
+        if target.mobile_status == discord.Status.dnd: status_string += "<:mobile_dnd:862217743082979329>"
 
-        if target.web_status == discord.Status.online: status_string += "<:browser_online:853462294906011698>"
-        if target.web_status == discord.Status.idle: status_string += "<:browser_idle:853462332507422741>"
-        if target.web_status == discord.Status.dnd: status_string += "<:browser_dnd:853462360476090399>"
+        if target.web_status == discord.Status.online: status_string += "<:browser_online:862217876797390860>"
+        if target.web_status == discord.Status.idle: status_string += "<:browser_idle:862217926487834624>"
+        if target.web_status == discord.Status.dnd: status_string += "<:browser_dnd:862217975603789844>"
 
         if status_string == "": status_string = "NA"
 
@@ -200,16 +201,28 @@ class information(commands.Cog):
     # tserverinfo
     @commands.command(aliases=["si"])
     async def serverinfo(self, ctx):
-        em = Embed(title=f"Server Info - {ctx.guild.name}",
+        em = Embed(title=f"",
                   colour=self.client.Blue)
                 
         em.set_thumbnail(url=ctx.guild.icon_url)
+        em.set_author(name=f"{ctx.guild.name} | Server Info", icon_url = ctx.guild.icon_url)
 
-        statuses = [len(list(filter(lambda m: str(m.status) == "online", ctx.guild.members))),
-                    len(list(filter(lambda m: str(m.status) == "idle", ctx.guild.members))),
-                    len(list(filter(lambda m: str(m.status) == "dnd", ctx.guild.members))),
-                    len(list(filter(lambda m: str(m.status) == "offline", ctx.guild.members)))]
+        #Channels
+        locked_channel = len([i for i in ctx.guild.text_channels if i.overwrites_for(ctx.guild.default_role).send_messages == False])
+        if locked_channel != 0: locked_channel = f" locked ({locked_channel})"
+        else: locked_channel = " "
 
+        locked_voice = len([i for i in ctx.guild.voice_channels if i.overwrites_for(ctx.guild.default_role).connect == False])
+        if locked_voice != 0: locked_voice = f" locked ({locked_voice})"
+        else: locked_voice = " "
+
+        Channels = [f"<:announcements:862203838375395338> {len([i for i in ctx.guild.channels if str(i.type) == 'news'])}",
+                    f"<:stage:862200069783289856> {len(ctx.guild.stage_channels)}",
+                    f"<:category:862208265244114974> {len(ctx.guild.categories)}",
+                    f"<:text_channel:862208150336569364> {len(ctx.guild.text_channels)} {locked_channel}",
+                    f"<:voice_channel:862208215117594662> {len(ctx.guild.voice_channels)} {locked_voice}"]
+
+        #Members
         Members = [len(ctx.guild.members),
                    len(list(filter(lambda m: not m.bot, ctx.guild.members))),
                    len(list(filter(lambda m: m.bot, ctx.guild.members)))]
@@ -218,25 +231,52 @@ class information(commands.Cog):
             guild_bans_lenght = len(await ctx.guild.bans())
         except discord.Forbidden:
             guild_bans_lenght = f"MissingPerms"
+        
+        #Emojis
+        animated_emojis = 0
+        for x in ctx.guild.emojis:
+            if x.animated:
+                animated_emojis = animated_emojis + 1
 
-        Channels = [len(ctx.guild.text_channels),
-                    len(ctx.guild.voice_channels),
-                    len(ctx.guild.categories)]
+        emojis =[len(ctx.guild.emojis),
+                 (len(ctx.guild.emojis)-animated_emojis),
+                 animated_emojis]
 
-        Info = [ctx.guild.owner,
-                ctx.guild.created_at.strftime("%d/%m/%Y"),
-                ctx.guild.region,
-                len(ctx.guild.roles)]
+        #Status
+        statuses = [len(list(filter(lambda m: str(m.status) == "online", ctx.guild.members))),
+                    len(list(filter(lambda m: str(m.status) == "idle", ctx.guild.members))),
+                    len(list(filter(lambda m: str(m.status) == "dnd", ctx.guild.members))),
+                    len(list(filter(lambda m: str(m.status) == "offline", ctx.guild.members)))]
 
         online_status_emoji = "<:online_status:851753067611553803>"
         idle_status_emoji = "<:idle_status:851753110132228106>"
         dnd_status_emoji = "<:dnd_status:851753181859151872>"
         offline_status_emoji = "<:offline_status:851753226407641098>"
 
-        fields = [("Info",f"Owner: {Info[0]}\nCreated: {Info[1]}\nVoice region: {Info[2]}\nRoles: {Info[3]}",True),
-                  ("Channels", f"<:text_channel:846217104381575238> {Channels[0]}\n<:voice_channel:846217088535494707> {Channels[1]}\n<:category:846219026123849749> {Channels[2]}", True),
+        Info = [ctx.guild.owner,
+                ctx.guild.created_at.strftime("%b %d %Y %I:%M %p"),
+                ctx.guild.region,
+                len(ctx.guild.roles)]
+        
+        if str(ctx.guild.verification_level) == None: verification_level = 0
+        if str(ctx.guild.verification_level) == "low": verification_level = 1 
+        if str(ctx.guild.verification_level) == "medium": verification_level = 2
+        if str(ctx.guild.verification_level) == "high": verification_level = 3
+        if str(ctx.guild.verification_level) == "extreme": verification_level = 4
+
+        fields = [("**Owner**",f"{ctx.guild.owner}",True),
+                  ("**Created**",f'{ctx.guild.created_at.strftime("%b %d %Y %I:%M %p")}',True),
+                  (f"**Verfication Level [{verification_level}]**",f"{str(ctx.guild.verification_level).title()}",True),
+
+                  (f"**File size limit**",f"{int(ctx.guild.filesize_limit/1000000)} MB",True),
+                  (f"**Region**",f"{ctx.guild.region}",True),
+                  (f"**Roles**",f"{len(ctx.guild.roles)}",True),
+                  
+                  ("Channels", f"{Channels[0]} {Channels[1]} {Channels[2]}\n{Channels[3]}\n{Channels[4]}", True),
                   ("Members", f"Total: {Members[0]}\nHumans: {Members[1]}\nBots: {Members[2]}\nBanned: {guild_bans_lenght}", True),
-                  ("Statuses", f"{online_status_emoji}{statuses[0]} {idle_status_emoji}{statuses[1]} {dnd_status_emoji}{statuses[2]} {offline_status_emoji}{statuses[3]}", True)]
+                  ("Emojis",f"Total: {emojis[0]}\nStatic: {emojis[1]}\nAnimated: {emojis[2]}",True),
+
+                  ("Statuses", f"{online_status_emoji}{statuses[0]} {idle_status_emoji}{statuses[1]} {dnd_status_emoji}{statuses[2]} {offline_status_emoji}{statuses[3]}", False),]
 
         for name, value, inline in fields:
             em.add_field(name=name, value=value, inline=inline)
