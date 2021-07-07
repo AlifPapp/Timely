@@ -252,13 +252,8 @@ class information(commands.Cog):
         idle_status_emoji = "<:idle_status:851753110132228106>"
         dnd_status_emoji = "<:dnd_status:851753181859151872>"
         offline_status_emoji = "<:offline_status:851753226407641098>"
-
-        Info = [ctx.guild.owner,
-                ctx.guild.created_at.strftime("%b %d %Y %I:%M %p"),
-                ctx.guild.region,
-                len(ctx.guild.roles)]
         
-        if str(ctx.guild.verification_level) == None: verification_level = 0
+        if str(ctx.guild.verification_level) == "none": verification_level = 0
         if str(ctx.guild.verification_level) == "low": verification_level = 1 
         if str(ctx.guild.verification_level) == "medium": verification_level = 2
         if str(ctx.guild.verification_level) == "high": verification_level = 3
@@ -266,7 +261,7 @@ class information(commands.Cog):
 
         fields = [("**Owner**",f"{ctx.guild.owner}",True),
                   ("**Created**",f'{ctx.guild.created_at.strftime("%b %d %Y %I:%M %p")}',True),
-                  (f"**Verfication Level [{verification_level}]**",f"{str(ctx.guild.verification_level).title()}",True),
+                  (f"**Verification Level [{verification_level}]**",f"{str(ctx.guild.verification_level).title()}",True),
 
                   (f"**File size limit**",f"{int(ctx.guild.filesize_limit/1000000)} MB",True),
                   (f"**Region**",f"{ctx.guild.region}",True),
