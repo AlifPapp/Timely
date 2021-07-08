@@ -88,7 +88,7 @@ class counting(commands.Cog):
                     embed_field1[5] = f"<:danger:848526668024250408>Removement of counting from {channel.mention} is canceled."
                     await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n \n{embed_field1[5]}",self.client.Blue,f""))
                     return
-                embed_field1[0] = f"<:static_cog:862507223062151168>**Counting Set**"
+                embed_field1[0] = f"<:static_cog:862507223062151168>**Counting Setup**"
                 embed_field1[5] = f"<:info:848526617449070633>Counting in {channel.mention} has been removed."
                 await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n \n{embed_field1[5]}",self.client.Blue,f""))
                 cluster.delete_one({"channel": channel.id})
@@ -149,7 +149,7 @@ class counting(commands.Cog):
         alternate = str(response.content)
 
         #Complete setup_edit
-        embed_field1[0] = f"<:static_cog:862507223062151168>**Counting Set**"
+        embed_field1[0] = f"<:static_cog:862507223062151168>**Counting Setup**"
         embed_field1[4] = f"<:marked_checkbox:861590371162652692> Alternate: {alternate}"
         embed_field1[5] = f"<a:green_check1:861578504188198912>Setup Complete."
         temp = f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n \n{embed_field1[5]}"
