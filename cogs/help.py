@@ -21,13 +21,16 @@ class help(commands.Cog):
     async def help(self, ctx):
         p = self.client.serverprefix
         em = discord.Embed(title = "List of commands",
-                           description = f"Prefix: `{p}` and {self.client.user.mention}",
+                           description = f"**Prefix:** `{p}` and {self.client.user.mention}\nIf you have any questions/queries feel free to join the [support server](https://discord.gg/E8DnTgMvMW)",
                            colour = self.client.Green,
                            timestamp=datetime.utcnow())
 
-        em.add_field(name="Categories",value=f"> Currency\n> Music\n> Information\n> Moderation\n> Settings\n> Other",inline=False)
-        em.add_field(name="Usage:",value = f"`{p}<help <category>`")
-
+        em.add_field(name="<:coin:862881131799248937> Currency",value=f"`{p}help currency`",inline=True)
+        em.add_field(name="<a:music:862881551780282368> Music",value = f"`{p}help music`",inline=True)
+        em.add_field(name="<:info:862881844265746442> Information",value = f"`{p}help information`",inline=True)
+        em.add_field(name="<:count:862882885916033054> Counting",value = f"`{p}help counting`",inline=True)
+        em.add_field(name="<:moderator:862883498214162453> Moderation",value = f"`{p}help moderation`",inline=True)
+        em.add_field(name="<:static_cog:862507223062151168> Settings",value = f"`{p}help settings`",inline=True)
         await ctx.send(embed = em)
 
 
@@ -35,15 +38,18 @@ class help(commands.Cog):
     @help.command()
     async def currency(self, ctx):
         p = self.client.serverprefix
-        em = discord.Embed(title = "Currency commands",
-                           description = "Commands for an economy system, \nbased on the movie: **In Time**.",
+
+        commands_list = sorted(["balance","profile","rich","globalrich",
+                         "daily","weekly","monthly",
+                         "card","slots",
+                         "pray","work","steal","give"])
+        commands_list = f"`, `{p}".join(commands_list)
+        commands_list = f"`{p}{commands_list}`"
+
+        em = discord.Embed(title = "<:coin:862881131799248937> Currency commands",
+                           description = commands_list,
                            colour = self.client.Green,
                            timestamp=datetime.utcnow())
-
-        em.add_field(name="Informational:",value=f"> {p}balance\n> {p}profile\n> {p}rich\n> {p}globalrich",inline=True)
-        em.add_field(name="Periodic:",value=f"> {p}daily\n> {p}weekly\n> {p}monthly",inline=True)
-        em.add_field(name="Gamble:",value=f"> {p}card\n> {p}slots",inline=True)
-        em.add_field(name="Earn:",value=f"> {p}pray\n> {p}work\n> {p}steal\n> {p}give",inline=True)
 
         em.set_footer(text=f"{p}help <command>")
         await ctx.send(embed = em)
@@ -52,12 +58,15 @@ class help(commands.Cog):
     @help.command()
     async def devcurrency(self, ctx):
         p = self.client.serverprefix
-        em = discord.Embed(title = "Currency Moderator commands",
-                           description = "Commands that can only be used by Timely's moderators.",
+
+        commands_list = sorted(["editusercurrency","openaccountcurrency"])
+        commands_list = f"`, `{p}".join(commands_list)
+        commands_list = f"`{p}{commands_list}`"
+
+        em = discord.Embed(title = "<:coin:862881131799248937> Currency Moderator commands",
+                           description = commands_list,
                            colour = self.client.Green,
                            timestamp=datetime.utcnow())
-
-        em.add_field(name="Commands:",value=f"> {p}editusercurrency\n> {p}openaccountcurrency")
 
         em.set_footer(text=f"{p}help <command>")
         await ctx.send(embed = em)
@@ -66,12 +75,15 @@ class help(commands.Cog):
     @help.command()
     async def music(self, ctx):
         p = self.client.serverprefix
-        em = discord.Embed(title = "Music commands",
-                           description = "Commands for listening to music",
+
+        commands_list = sorted(["play","pause","resume","leave","join"])
+        commands_list = f"`, `{p}".join(commands_list)
+        commands_list = f"`{p}{commands_list}`"
+
+        em = discord.Embed(title = "<a:music:862881551780282368> Music commands",
+                           description = commands_list,
                            colour = self.client.Green,
                            timestamp=datetime.utcnow())
-
-        em.add_field(name="Commands:",value=f"> {p}play\n> {p}pause\n> {p}resume\n> {p}leave\n> {p}join")
 
         em.set_footer(text=f"{p}help <command>")
         await ctx.send(embed = em)
@@ -80,14 +92,17 @@ class help(commands.Cog):
     @help.command()
     async def information(self, ctx):
         p = self.client.serverprefix
-        em = discord.Embed(title = "Informational commands",
-                           description = "Commands that returns usefull information.",
+
+        commands_list = sorted(["prefix","ping","invite","developers","botinfo",
+                                "serverinfo","serveremojis","serveravatar","oldest","newest",
+                                "userinfo","avatar"])
+        commands_list = f"`, `{p}".join(commands_list)
+        commands_list = f"`{p}{commands_list}`"
+
+        em = discord.Embed(title = "<:info:862881844265746442> Informational commands",
+                           description = commands_list,
                            colour = self.client.Green,
                            timestamp=datetime.utcnow())
-
-        em.add_field(name="Bot Info:",value=f"> {p}prefix\n> {p}ping\n> {p}invite\n> {p}creator\n> {p}developers\n> {p}botinfo",inline=True)
-        em.add_field(name="Server Info:",value=f"> {p}serverinfo\n> {p}serveremojis\n> {p}serveravatar\n> {p}oldest\n> {p}newest",inline=True)
-        em.add_field(name="User Info:",value=f"> {p}userinfo\n> {p}avatar",inline=True)
 
         em.set_footer(text=f"{p}help <command>")
         await ctx.send(embed = em)
@@ -96,12 +111,15 @@ class help(commands.Cog):
     @help.command()
     async def moderation(self, ctx):
         p = self.client.serverprefix
-        em = discord.Embed(title = "Moderation commands",
-                           description = "Help moderate your server with these commands.",
+
+        commands_list = sorted(["purge","giveadmin","kick","ban","unban"])
+        commands_list = f"`, `{p}".join(commands_list)
+        commands_list = f"`{p}{commands_list}`"
+
+        em = discord.Embed(title = "<:moderator:862883498214162453> Moderation commands",
+                           description = commands_list,
                            colour = self.client.Green,
                            timestamp=datetime.utcnow())
-
-        em.add_field(name="Commands:",value=f"> {p}purge\n> {p}giveadmin\n> {p}kick\n> {p}ban\n> {p}unban")
 
         em.set_footer(text=f"{p}help <command>")
         await ctx.send(embed = em)
@@ -110,12 +128,15 @@ class help(commands.Cog):
     @help.command()
     async def settings(self, ctx):
         p = self.client.serverprefix
-        em = discord.Embed(title = "Config commands",
-                           description = "Per-server settings.",
+
+        commands_list = sorted(["changeprefix"])
+        commands_list = f"`, `{p}".join(commands_list)
+        commands_list = f"`{p}{commands_list}`"
+
+        em = discord.Embed(title = "<:static_cog:862507223062151168> Settings commands",
+                           description = commands_list,
                            colour = self.client.Green,
                            timestamp=datetime.utcnow())
-
-        em.add_field(name="Commands:",value=f"> {p}changeprefix")
 
         em.set_footer(text=f"{p}help <command>")
         await ctx.send(embed = em)
