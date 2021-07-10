@@ -248,10 +248,10 @@ class information(commands.Cog):
                     len(list(filter(lambda m: str(m.status) == "dnd", ctx.guild.members))),
                     len(list(filter(lambda m: str(m.status) == "offline", ctx.guild.members)))]
 
-        online_status_emoji = "<:online_status:851753067611553803>"
-        idle_status_emoji = "<:idle_status:851753110132228106>"
-        dnd_status_emoji = "<:dnd_status:851753181859151872>"
-        offline_status_emoji = "<:offline_status:851753226407641098>"
+        online_status_emoji = "<:online_status:863387938439299072>"
+        idle_status_emoji = "<:idle_status:863387977782788117>"
+        dnd_status_emoji = "<:dnd_status:863388021877243934>"
+        offline_status_emoji = "<:offline_status:863388067691888651>"
         
         if str(ctx.guild.verification_level) == "none": verification_level = 0
         if str(ctx.guild.verification_level) == "low": verification_level = 1 
