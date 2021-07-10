@@ -238,9 +238,9 @@ class information(commands.Cog):
             if x.animated:
                 animated_emojis = animated_emojis + 1
 
-        emojis =[f"{(len(ctx.guild.emojis)-animated_emojis)}/{int(ctx.guild.emoji_limit/2)}",
-                 f"{animated_emojis}/{int(ctx.guild.emoji_limit/2)}",
-                 f"{len(ctx.guild.emojis)}/{ctx.guild.emoji_limit}"]
+        emojis =[f"{(len(ctx.guild.emojis)-animated_emojis)}/{ctx.guild.emoji_limit}",
+                 f"{animated_emojis}/{ctx.guild.emoji_limit}",
+                 f"{len(ctx.guild.emojis)}/{ctx.guild.emoji_limit*2}"]
 
         #Status
         statuses = [len(list(filter(lambda m: str(m.status) == "online", ctx.guild.members))),
