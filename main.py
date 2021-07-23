@@ -4,6 +4,7 @@ from discord.ext import commands
 
 import ssl
 import os
+import asyncpraw
 from pymongo import MongoClient
 from datetime import datetime
 
@@ -12,12 +13,12 @@ defaultprefix = "t"
 #####################################################################################################################################
 ######################################################### GET SERVER PREFIX #########################################################
 #####################################################################################################################################
-async def get_prefix(client,ctx):
+async def get_prefix(client, ctx):
     cluster = client.mongodb["Settings"]["ServerPrefix"]
     if ctx.guild is None:
         client.serverprefix = defaultprefix
         upperserverprefix = client.serverprefix.upper()
-        return commands.when_mentioned_or(upperserverprefix, client.serverprefix)(client,ctx)
+        return commands.when_mentioned_or(upperserverprefix, client.serverprefix)(client, ctx)
 
     guild = cluster.find_one({"guild_id": str(ctx.guild.id)})
     
@@ -26,11 +27,11 @@ async def get_prefix(client,ctx):
         cluster.insert_one(guilds)
         client.serverprefix = defaultprefix
         upperserverprefix = client.serverprefix.upper()
-        return commands.when_mentioned_or(upperserverprefix, client.serverprefix)(client,ctx)
+        return commands.when_mentioned_or(upperserverprefix, client.serverprefix)(client, ctx)
 
     client.serverprefix = guild["prefix"]
     upperserverprefix = client.serverprefix.upper()
-    return commands.when_mentioned_or(upperserverprefix, client.serverprefix)(client,ctx)
+    return commands.when_mentioned_or(upperserverprefix, client.serverprefix)(client, ctx)
 
 
 #####################################################################################################################################
@@ -55,6 +56,10 @@ client.Black = int("000000" , 16)
 client.Green = int("2EC550" , 16)
 client.Red = int("D72D42" , 16)
 client.Blue = int("7289DA" , 16)
+
+client.reddit = asyncpraw.Reddit(client_id='I3OPzaRVRoxfDcHwiK5afg',
+                client_secret='lDSn3SnYCeXtImvRyXHshGtiVHv38A',
+                user_agent='phyton_praw')
 
 #MongoClientLink = open("MongoClient.txt","r").readline()
 #client.mongodb = MongoClient(MongoClientLink.strip(), ssl_cert_reqs=ssl.CERT_NONE)
