@@ -73,7 +73,7 @@ async def reddit_send(self, ctx, subreddit, emoji, limit):
     if f"{subreddit}" not in reddit_data:
         msg = await ctx.reply(embed = await basic_embed(f"", f"<a:loading:864447463980793896> Loading {limit} submissions.",self.client.Blue,""))
         if await reddit_fill_var(self, subreddit, limit) == False: 
-            await ctx.edit(embed = await basic_embed(f"", f"<:danger:848526668024250408> subreddit: *r/{subreddit}* could not be found.",self.client.Red,""))
+            await msg.edit(embed = await basic_embed(f"", f"<:danger:848526668024250408> subreddit: [r/{subreddit}](https://www.reddit.com/r/{subreddit}) could not be found.",self.client.Red,""))
             could_not_be_found = True
         with open("reddit_data.json","r") as f: reddit_data = json.load(f)
     
