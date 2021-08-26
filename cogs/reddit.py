@@ -140,7 +140,7 @@ async def reddit_send(self, ctx, subreddit, emoji, limit):
         return user.bot == False and str(reaction.emoji) == emoji and reaction.message == msg
 
     try: 
-        reaction, user = await self.client.wait_for('reaction_add', timeout=30.0, check=check)
+        reaction, user = await self.client.wait_for('reaction_add', timeout=120.0, check=check)
     except asyncio.TimeoutError: 
         await msg.remove_reaction(emoji, self.client.user)
         return
