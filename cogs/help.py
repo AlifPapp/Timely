@@ -168,7 +168,7 @@ class help(commands.Cog):
         commands_list = f"`, `{p}".join(commands_list)
         commands_list = f"`{p}{commands_list}`"
 
-        em = discord.Embed(title = "<:folder:874116455409528904> reddit commands",
+        em = discord.Embed(title = "<:reddit_icon:869174075250061343> Reddit commands",
                            description = commands_list,
                            colour = self.client.Green,
                            timestamp=datetime.utcnow())
