@@ -24,7 +24,7 @@ class nsfw(commands.Cog):
     @commands.command()
     async def redditsearch(self, ctx, subreddit):
         emoji = "<:refresh:874122192143679528>"
-        limit = 10
+        limit = 100
         
         #input arg error
         if subreddit[0:2] != "r/" or subreddit == None:
