@@ -61,7 +61,7 @@ client.reddit = asyncpraw.Reddit(client_id='I3OPzaRVRoxfDcHwiK5afg',
                 client_secret='lDSn3SnYCeXtImvRyXHshGtiVHv38A',
                 user_agent='phyton_praw')
 
-MongoClientLink = open("MongoClient.txt","r").readline()
+#MongoClientLink = open("MongoClient.txt","r").readline()
 #client.mongodb = MongoClient(MongoClientLink.strip(), ssl_cert_reqs=ssl.CERT_NONE)
 client.mongodb = MongoClient(str(os.environ.get('MONGO_LINK')), ssl_cert_reqs=ssl.CERT_NONE)
 
