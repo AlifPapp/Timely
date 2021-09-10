@@ -41,7 +41,8 @@ intents = discord.Intents.all()
 client = commands.Bot(command_prefix = get_prefix,
                       case_insensitive=True,
                       intents = intents,
-                      status=discord.Status.idle)
+                      status=discord.Status.idle,
+                      activity=discord.Activity(type=discord.ActivityType.listening , name=f"thelp")))
 client.remove_command('help')
 
 #####################################################################################################################################
@@ -92,7 +93,6 @@ async def on_ready():
     print('Name:', client.user.name)
     print('ID:', client.user.id)
     print('------')
-    await client.change_presence(activity=discord.Streaming(name=f'thelp to {len(client.guilds)} servers', url="https://www.twitch.tv/zseni_51"))
     print('Main.py Loaded!')
 
 @client.event
