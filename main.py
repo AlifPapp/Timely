@@ -41,8 +41,8 @@ intents = discord.Intents.all()
 client = commands.Bot(command_prefix = get_prefix,
                       case_insensitive=True,
                       intents = intents,
-                      status=discord.Status.idle,
-                      activity=discord.Activity(type=discord.ActivityType.listening , name=f"thelp")))
+                      status = discord.Status.idle,
+                      activity=discord.Activity(type=discord.ActivityType.listening , name=f"thelp"))
 client.remove_command('help')
 
 #####################################################################################################################################
