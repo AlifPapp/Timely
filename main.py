@@ -9,7 +9,7 @@ from pymongo import MongoClient
 from datetime import datetime
 
 
-defaultprefix = "x"
+defaultprefix = "t"
 #####################################################################################################################################
 ######################################################### GET SERVER PREFIX #########################################################
 #####################################################################################################################################
@@ -61,9 +61,9 @@ client.reddit = asyncpraw.Reddit(client_id='I3OPzaRVRoxfDcHwiK5afg',
                 client_secret='lDSn3SnYCeXtImvRyXHshGtiVHv38A',
                 user_agent='phyton_praw')
 
-MongoClientLink = open("MongoClient.txt","r").readline()
-client.mongodb = MongoClient(MongoClientLink.strip(), ssl_cert_reqs=ssl.CERT_NONE)
-#client.mongodb = MongoClient(str(os.environ.get('MONGO_LINK')), ssl_cert_reqs=ssl.CERT_NONE)
+#MongoClientLink = open("MongoClient.txt","r").readline()
+#client.mongodb = MongoClient(MongoClientLink.strip(), ssl_cert_reqs=ssl.CERT_NONE)
+client.mongodb = MongoClient(str(os.environ.get('MONGO_LINK')), ssl_cert_reqs=ssl.CERT_NONE)
 
 #####################################################################################################################################
 ############################################################## C O G S ##############################################################
@@ -172,6 +172,6 @@ async def changeprefix(ctx, newprefix: str="None"):
         await ctx.reply(embed = em)
 
 #####################################################################################################################################
-token = open("token.txt","r").readline()
-client.run(token.strip())
-#client.run(str(os.environ.get('BOT_TOKEN')))
+#token = open("token.txt","r").readline()
+#client.run(token.strip())
+client.run(str(os.environ.get('BOT_TOKEN')))
