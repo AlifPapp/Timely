@@ -136,7 +136,7 @@ async def reddit_send(self, ctx, subreddit, emoji, limit):
                        colour = self.client.Blue,
                        timestamp=datetime.utcnow())
     em.set_image(url = submission.url)
-    em.set_footer(text = f"👍{submission.score} 💬{submission.num_comments} r/{subreddit.lower()}")
+    em.set_footer(text = f"r/{subreddit.lower()}")
 
     #send embed and add reaction
     if msg == None: 
