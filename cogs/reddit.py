@@ -171,8 +171,8 @@ async def reddit_send(self, ctx, subreddit, emoji, limit):
                 reddit_insert[f"day{1}"] = 1
             cluster.insert_one(reddit_insert)
         else:
-            cluster.update_one({"subrredit": subreddit.lower()},{"$set":{"alltime": (reddit["alltime"]+1) }})
-            cluster.update_one({"subrredit": subreddit.lower()},{"$set":{f"day1": (reddit[f"day1"]+1) }})
+            cluster.update_one({"subreddit": subreddit.lower()},{"$set":{"alltime": (reddit["alltime"]+1) }})
+            cluster.update_one({"subreddit": subreddit.lower()},{"$set":{f"day1": (reddit[f"day1"]+1) }})
 
     #Check for user reaction
     def check(reaction, user):
