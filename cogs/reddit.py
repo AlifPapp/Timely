@@ -84,7 +84,7 @@ async def reddit_fill_var(self, subreddit, limit):
 
     subreddit = await self.client.reddit.subreddit(subreddit)
     
-    new = subreddit.new(limit = limit)
+    new = subreddit.rising(limit = limit)
 
     cycle_int = 0
     try: 
