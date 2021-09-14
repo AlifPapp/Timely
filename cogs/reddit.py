@@ -11,7 +11,6 @@ class reddit(commands.Cog):
     def __init__(self, client):
         self.client = client
         
-
     @commands.Cog.listener()
     async def on_ready(self):
         print("reddit.py Loaded!")
@@ -84,7 +83,7 @@ async def reddit_fill_var(self, subreddit, limit):
 
     subreddit = await self.client.reddit.subreddit(subreddit)
     
-    new = subreddit.rising(limit = limit)
+    new = subreddit.new(limit = limit)
 
     cycle_int = 0
     try: 
@@ -122,20 +121,16 @@ async def reddit_send(self, ctx, subreddit, emoji, limit):
     #retrive submission from local storage
     cycle_int = reddit_data[f"{subreddit}{guild.id}"][f"cycle_int"]
     submission = await self.client.reddit.submission(reddit_data[f"{subreddit}"][f"s{cycle_int}"])
-    
-    #check if submission is marked over_18
-    if submission.over_18:
-        if ctx.channel.is_nsfw() == False:
-            em = await basic_embed(f"", f"<:danger:848526668024250408> Prohibited not a nsfw channel.",self.client.Red,"")
-            if msg == None: await ctx.reply(embed = em)
-            else: await msg.edit(embed = em)
-            return
 
     #setup embed
     em = discord.Embed(description = f"[{submission.title}](https://www.reddit.com{submission.permalink})",
                        colour = self.client.Blue,
                        timestamp=datetime.utcnow())
-    em.set_image(url = submission.url)
+    if submission.over_18:
+        if ctx.channel.is_nsfw() == False:
+            em.set_image(url = "https://support.discord.com/hc/article_attachments/360007795191/2_.jpg")
+    else: 
+        em.set_image(url = submission.url)
     em.set_footer(text = f"r/{subreddit.lower()}")
 
     #send embed and add reaction
