@@ -9,7 +9,7 @@ from pymongo import MongoClient
 from datetime import datetime
 
 
-defaultprefix = "x"
+defaultprefix = "t"
 #####################################################################################################################################
 ######################################################### GET SERVER PREFIX #########################################################
 #####################################################################################################################################
@@ -64,7 +64,7 @@ client.reddit = asyncpraw.Reddit(client_id='I3OPzaRVRoxfDcHwiK5afg',
 
 MongoClientLink = open("MongoClient.txt","r").readline()
 client.mongodb = MongoClient(MongoClientLink.strip(), ssl_cert_reqs=ssl.CERT_NONE)
-#client.mongodb = MongoClient(str(os.environ.get('MONGO_LINK')), ssl_cert_reqs=ssl.CERT_NONE)
+client.mongodb = MongoClient(str(os.environ.get('MONGO_LINK')), ssl_cert_reqs=ssl.CERT_NONE)
 
 #####################################################################################################################################
 ############################################################## C O G S ##############################################################
