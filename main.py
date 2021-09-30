@@ -74,6 +74,7 @@ initial_extensions = ['cogs.help',
                       'cogs.counting',
                       'cogs.reddit',
                       'cogs.information',
+                      'cogs.other',
                       'cogs.backgroundtasks',
                       'cogs.error',
                       'cogs.creator_cmds']
