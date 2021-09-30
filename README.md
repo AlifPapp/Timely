@@ -2,8 +2,13 @@
 
 * Inside VSC terminal
   * ```py -m pip install <module>```
+
 * Inside CMDPrompt
   * ```py -3 -m pip install -U <module>```
+
+* Discord.py 2.0 install
+  * ```pip install -U git+https://github.com/Rapptz/discord.py``` 
+
 * Creating requiremnts.txt and uninstaling everything
   * https://stackoverflow.com/questions/11248073/what-is-the-easiest-way-to-remove-all-packages-installed-by-pip
 
