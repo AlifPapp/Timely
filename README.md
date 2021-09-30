@@ -1,10 +1,10 @@
 # TimelyBot_Official
 
- * Inside VSC terminal
+* Inside VSC terminal
   * ```py -m pip install <module>```
- * Inside CMDPrompt
+* Inside CMDPrompt
   * ```py -3 -m pip install -U <module>```
- * Creating requiremnts.txt and uninstaling everything
+* Creating requiremnts.txt and uninstaling everything
   * https://stackoverflow.com/questions/11248073/what-is-the-easiest-way-to-remove-all-packages-installed-by-pip
 
 * Heroku Setup:
