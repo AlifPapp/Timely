@@ -342,7 +342,7 @@ class information(commands.Cog):
                            description = "Yep, i made the bot.",
                            colour = self.client.Blue,
                            timestamp=datetime.utcnow())
-        em.set_thumbnail(url=user.avatar_url)
+        em.set_thumbnail(url=user.avatar.url)
 
         em.add_field(name= "Youtube", value = "[here](http://bit.ly/Zseni-Youtube)", inline=True)
         em.add_field(name= "Discord", value = "[here](https://discord.gg/SXng95f)", inline=True)
