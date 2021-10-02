@@ -50,29 +50,33 @@ async def calc_DHMS_left(lifespan_amt):
 async def open_account(self, ctx, user):
     cluster = self.client.mongodb["Currency"]["Main"]
     userdata = cluster.find_one({"id": user.id})
+
+    DefaultTime = self.client.DefaultTime
+    Alive = False
     if userdata is None:
-        DefaultTime = self.client.DefaultTime
         users = {"id": user.id, "savings": 0, "lifespan": DefaultTime,"luck": 0,
                  "commands_used": 0, "stolen": 0,
                  "daily": 0, "weekly": 0, "monthly": 0,
                  "pray": 0}
         cluster.insert_one(users)
-
-        DefaultTimeDays = DefaultTime/86400
+        Alive = True
+    else:
+        if userdata["lifespan"] == -666: 
+            Alive = True
+    if Alive == True:
         em = discord.Embed(title = f"The clock is ticking {user.name}!",
-                           description = f"Start using various commands to gain more time, you only have **{int(DefaultTimeDays)} days** left!",
+                           description = f"Start using various commands to gain more time, you only have **{int(DefaultTime/86400)} days** left!",
                            color = self.client.Blue,
                            timestamp=datetime.utcnow())
         try: await user.send(embed = em)
         except: 
             if ctx != None: await ctx.send(embed = em)
+        cluster.update_one({"id":user.id},{"$set":{"lifespan":DefaultTime}})
     return True
 
 async def user_died(self, ctx, user):
     cluster = self.client.mongodb["Currency"]["Main"]
     await open_account(self, ctx, user)
-
-    DefaultTime = self.client.DefaultTime
 
     em = discord.Embed(title = f"{user} Died!.",
                    description = "-You met the end of your lifespan. \n-You lost all your items and savings. \n-You get to keep whatever was hidden in your treasure chest.",
@@ -81,10 +85,8 @@ async def user_died(self, ctx, user):
     try: await user.send(embed = em)
     except: 
         if ctx != None: await ctx.send(embed = em)
-    lifespan_amt = DefaultTime
-    savings_amt = 0
-    cluster.update_one({"id":user.id},{"$set":{"savings":savings_amt}})
-    cluster.update_one({"id":user.id},{"$set":{"lifespan":lifespan_amt}})
+    cluster.update_one({"id":user.id},{"$set":{"savings":0}})
+    cluster.update_one({"id":user.id},{"$set":{"lifespan":-666}})
     return
 #####################################################################################################################################
 ########################################################### G E N E R A L ###########################################################
