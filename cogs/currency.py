@@ -649,21 +649,15 @@ class currency(commands.Cog):
                 await ctx.reply(embed = await basic_embed(f"", f"<:danger:848526668024250408> User doesn't exist in my database.",self.client.Red,""))
                 return
             
-            if type in ("savings","lifespan"):
-                edit_int = int(edit_float)
-                target_savings_amt = targets[type] + edit_int
-                edited_by = edit_int
-            elif type == "luck":
-                target_savings_amt = targets[type] + edit_float
-                edited_by = edit_float
+            if type in ("savings","lifespan", "luck"): target_new_amt = int(edit_float)
             
             if type in ("savings","lifespan","luck"):
                 try:
-                    cluster.update_one({"id":target.id},{"$set":{type:target_savings_amt}})
+                    cluster.update_one({"id":target.id},{"$set":{type:target_new_amt}})
                 except OverflowError:
                     await ctx.reply(embed = await basic_embed(f"", f"<:danger:848526668024250408> OverflowError.\nTry a smaller number maybe.",self.client.Red,""))
                     return
-                await ctx.reply(embed = await basic_embed(f"", f"<:info:848526617449070633> You successfully edited {target}'s {type} by {edited_by}",self.client.Blue,""))
+                await ctx.reply(embed = await basic_embed(f"", f"<:info:848526617449070633> You successfully edited {target}'s {type} to {target_new_amt}",self.client.Blue,""))
             else: 
                 await ctx.reply(embed = await basic_embed(f"", f"<:danger:848526668024250408> Invalid cluster type.",self.client.Red,""))
         return
