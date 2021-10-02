@@ -26,9 +26,10 @@ async def Currency_Countdown(self):
     list_of_users = cluster.find().sort("id", -1)
 
     for x in list_of_users:
-        if x["lifespan"] < 1: 
-            user = await self.client.fetch_user(x["id"])
-            await user_died(self, None, user)
+        if x["lifespan"] < 1:
+            if x["lifespan"] != -666: 
+                user = await self.client.fetch_user(x["id"])
+                await user_died(self, None, user)
         else: 
             cluster.update_one({"id": x["id"]},{"$set":{"lifespan": x["lifespan"] - 1}})
 
