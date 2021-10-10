@@ -10,7 +10,7 @@ from discord import client
 from discord.ext import commands
 
 
-defaultprefix = "x"
+defaultprefix = "t"
 #####################################################################################################################################
 ######################################################### GET SERVER PREFIX #########################################################
 #####################################################################################################################################
@@ -51,9 +51,9 @@ with open("count_emoji.json","r") as f:
     client.Count_Emojis = json.load(f)
 with open("emoji.json","r") as f: 
     client.Emojis = json.load(f)
-with open("Secrets.json","r") as f: 
-    client.Secrets = json.load(f)
-#client.Secrets = json.loads(os.environ.get('Secrets'))
+#with open("Secrets.json","r") as f: 
+#    client.Secrets = json.load(f)
+client.Secrets = json.loads(os.environ.get('Secrets'))
 
 client.developerid = 416508283528937472, 615293601408090113, 566931386305609728
 client.cooldown = []
