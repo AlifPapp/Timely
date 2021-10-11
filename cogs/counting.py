@@ -294,8 +294,7 @@ class counting(commands.Cog):
             if fonts == "": fonts = "None"
 
         result = f"**Count:** +{count_amt}\n **Fonts:** {fonts}"
-        em = discord.Embed(title = f"{user.name}'s count",
-                           description=result,
+        em = discord.Embed(description=result,
                            color = self.client.Blue,
                            timestamp=datetime.utcnow())
         em.set_author(name=f"{user.name}'s count", icon_url = user.avatar.url)
