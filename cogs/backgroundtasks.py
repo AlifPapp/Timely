@@ -69,7 +69,7 @@ async def Reddit_MongoDB_Countdown(self):
 @tasks.loop(seconds = 21600) #6 hours
 async def Reddit_Json_Reset(self):
     data = {}
-    with open("json\reddit_data.json","w") as f:
+    with open("./json/reddit_data.json","w") as f:
         json.dump(data, f)
     
     cluster = self.client.mongodb["Reddit"]["Leaderboard"]
