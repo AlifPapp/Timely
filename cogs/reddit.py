@@ -77,7 +77,7 @@ class reddit(commands.Cog):
 
 #####################################################################################################################################
 async def reddit_fill_var(self, subreddit, limit):
-    with open("json\reddit_data.json","r") as f:
+    with open("./json/reddit_data.json","r") as f:
         data = json.load(f)
     if f"{subreddit}" not in data:
         data[f"{subreddit}"] = {}
@@ -93,7 +93,7 @@ async def reddit_fill_var(self, subreddit, limit):
             data[f"{subreddit}"][f"s{cycle_int}"] = submission.id
     except: return False
     
-    with open("json\reddit_data.json","w") as f:
+    with open("./json/reddit_data.json","w") as f:
         json.dump(data, f)
     return True
 
@@ -106,7 +106,7 @@ async def reddit_send(self, ctx, subreddit, emoji, limit):
         msg = await ctx.reply(embed = await basic_embed(f"", f"<a:loading:864447463980793896> Loading submission.",self.client.Blue,""))
 
     #stores submission if not already stored
-    with open("json\reddit_data.json","r") as f: 
+    with open("./json/reddit_data.json","r") as f: 
         reddit_data = json.load(f)
     if f"{subreddit}" not in reddit_data:
         msg = await ctx.reply(embed = await basic_embed(f"", f"<a:loading:864447463980793896> Loading {limit} submissions.",self.client.Blue,""))
@@ -114,7 +114,7 @@ async def reddit_send(self, ctx, subreddit, emoji, limit):
             await msg.edit(embed = await basic_embed(f"", f"{self.client.Emojis['danger']} subreddit: [r/{subreddit}](https://www.reddit.com/r/{subreddit}) could not be found.",self.client.Red,""))
             could_not_be_found = True
         else:
-            with open("json\reddit_data.json","r") as f: 
+            with open("./json/reddit_data.json","r") as f: 
                 reddit_data = json.load(f)
     
     #adds submission cycle_int for individual guild's if its missing.
@@ -150,7 +150,7 @@ async def reddit_send(self, ctx, subreddit, emoji, limit):
     if cycle_int == (limit + 1): cycle_int = 1
     reddit_data[f"{subreddit}{guild.id}"][f"cycle_int"] = cycle_int
 
-    with open("json\reddit_data.json","w") as f:
+    with open("./json/reddit_data.json","w") as f:
         json.dump(reddit_data, f)
 
     #Mongo DB - Leaderboard
