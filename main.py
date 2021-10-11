@@ -41,15 +41,15 @@ class Bot(commands.Bot):
                         activity=discord.Activity(type=discord.ActivityType.listening , name=f"thelp"))
         self.remove_command('help')
         
-        with open("json\count_emoji.json","r") as f: 
+        with open("./json/count_emoji.json","r") as f: 
             self.Count_Emojis = json.load(f)
-        with open("json\emoji.json","r") as f: 
+        with open("./json/emoji.json","r") as f: 
             self.Emojis = json.load(f)
         
-        if botishosted is True:
+        if botishosted == True:
             self.Secrets = json.loads(os.environ.get('Secrets'))
         else: 
-            with open("json\Secrets.json","r") as f: 
+            with open("./json/Secrets.json","r") as f: 
                 self.Secrets = json.load(f)
 
         self.developerid = 416508283528937472, 615293601408090113, 566931386305609728
