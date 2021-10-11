@@ -256,7 +256,7 @@ class counting(commands.Cog):
         emojis = f'{data[name]["Emoji_0"]}{data[name]["Emoji_1"]}{data[name]["Emoji_2"]}{data[name]["Emoji_3"]}{data[name]["Emoji_4"]}{data[name]["Emoji_5"]}{data[name]["Emoji_6"]}{data[name]["Emoji_7"]}{data[name]["Emoji_8"]}{data[name]["Emoji_9"]}'
         em.add_field(name=f"『{data[name]['Emoji_gif']}』 {name} +{data[name]['Cost']}", value=emojis, inline=False)
 
-        name = "Tropical"
+        name = "Tropicalpeach"
         emojis = f'{data[name]["Emoji_0"]}{data[name]["Emoji_1"]}{data[name]["Emoji_2"]}{data[name]["Emoji_3"]}{data[name]["Emoji_4"]}{data[name]["Emoji_5"]}{data[name]["Emoji_6"]}{data[name]["Emoji_7"]}{data[name]["Emoji_8"]}{data[name]["Emoji_9"]}'
         em.add_field(name=f"『{data[name]['Emoji_gif']}』 {name} +{data[name]['Cost']}", value=emojis, inline=False)
 
@@ -305,7 +305,7 @@ class counting(commands.Cog):
     async def countbuy(self, ctx, font: str="None"):
         command_syntax = f"Syntax: {self.client.serverprefix}countbuy <font>"
         font = font.capitalize() 
-        if font not in ("Cookie","Blob","Tropical","White","Magenta"):
+        if font not in ("Cookie","Blob","Tropicalpeach","White","Magenta"):
             await ctx.reply(embed = await basic_embed("", f"{self.client.Emojis['danger']} Not an existing font.",self.client.Red,f"{command_syntax}"))
             return
         
@@ -333,7 +333,7 @@ class counting(commands.Cog):
     async def countuse(self, ctx, font: str="None"):
         command_syntax = f"Syntax: {self.client.serverprefix}countuse <font>"
         font = font.capitalize() 
-        if font not in ("Cookie","Blob","Tropical","White","Magenta"):
+        if font not in ("Cookie","Blob","Tropicalpeach","White","Magenta"):
             await ctx.reply(embed = await basic_embed("", f"{self.client.Emojis['danger']} Not an existing font.",self.client.Red,f"{command_syntax}"))
             return
         
