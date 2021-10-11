@@ -347,7 +347,7 @@ class counting(commands.Cog):
             cluster.update_one({"id": ctx.author.id},{"$set":{"font": font}})
             data = self.client.Count_Emojis
             emojis = f'{data[font]["Emoji_0"]}{data[font]["Emoji_1"]}{data[font]["Emoji_2"]}{data[font]["Emoji_3"]}{data[font]["Emoji_4"]}{data[font]["Emoji_5"]}{data[font]["Emoji_6"]}{data[font]["Emoji_7"]}{data[font]["Emoji_8"]}{data[font]["Emoji_9"]}'
-            await ctx.reply(embed = await basic_embed("Equipped", f"Your now using **{font}**\n{emojis}",self.client.Blue,f"{command_syntax}"))
+            await ctx.reply(embed = await basic_embed("Equipped!", f"Your now using **{font} Font**\n{emojis}",self.client.Blue,f"{command_syntax}"))
         else:
             await ctx.reply(embed = await basic_embed("", f"{self.client.Emojis['danger']} You don't have this font.",self.client.Red,f"{command_syntax}"))
 
