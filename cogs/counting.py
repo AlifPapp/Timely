@@ -327,7 +327,7 @@ class counting(commands.Cog):
     async def countuse(self, ctx, font: str="None"):
         command_syntax = f"Syntax: {self.client.serverprefix}countuse <font>"
         font = font.capitalize() 
-        if font not in ("Cookie","Blob","Tropicalpeach","White","Magenta"):
+        if font not in ("Default","Cookie","Blob","Tropicalpeach","White","Magenta"):
             await ctx.reply(embed = await basic_embed("", f"{self.client.Emojis['danger']} Not an existing font.",self.client.Red,f"{command_syntax}"))
             return
         
