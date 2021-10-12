@@ -233,7 +233,7 @@ class counting(commands.Cog):
         cluster = self.client.mongodb["Counting"]["User"]
         users = cluster.find_one({"id": user.id})
         if users is None:
-            users = {"id": user.id, "count": 1, "fonts": "default", "font": "default"}
+            users = {"id": user.id, "count": 1, "fonts": "Default", "font": "Default"}
             cluster.insert_one(users)
         cluster.update_one({"id": user.id},{"$set":{"count":users["count"]+1}})
 
@@ -275,13 +275,13 @@ class counting(commands.Cog):
         else: 
             count_amt = users["count"]
             data = self.client.Count_Emojis
-            if users["fonts"] == "default":
+            if users["fonts"] == "Default":
                 fonts = "None"
             else:
                 n = ""
                 fonts = ""
                 for name in users["fonts"].split():
-                    if name == "default": 
+                    if name == "Default": 
                         fonts += f"{n}➤ **Default**\n0 1 2 3 4 5 6 7 8 9"
                     else:
                         fonts += f"{n}➤ **{name}**"
@@ -339,7 +339,7 @@ class counting(commands.Cog):
             return
         if font in users["fonts"].split():
             cluster.update_one({"id": ctx.author.id},{"$set":{"font": font}})
-            if font == "default":
+            if font == "Default":
                 await ctx.reply(embed = await basic_embed("Equipped!", f"You're now using the **Default** font\n0 1 2 3 4 5 6 7 8 9",self.client.Blue,f"{command_syntax}"))
                 return
             data = self.client.Count_Emojis
@@ -351,7 +351,7 @@ class counting(commands.Cog):
 
 #####################################################################################################################################
 async def convert_num2emoji(self, number,emoji):
-    if emoji == "default": return number
+    if emoji == "Default": return number
     data = self.client.Count_Emojis
     output = ""
     for x in str(number):
