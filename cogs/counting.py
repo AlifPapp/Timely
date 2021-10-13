@@ -38,151 +38,166 @@ class counting(commands.Cog):
         insert = False
         
         guilds = cluster.find_one({"channel": channel.id})
-        if guilds is not None: #if command was sent in a counting channel
+        if guilds is not None: #if command was sent in an active counting channel
             return
 
-        embed_field1 = [f"<a:cogs:859407226035765288> **Setting up counting.**",
-                        f"<:empty_checkbox:861484710898434108> Channel: NA",
-                        f"<:empty_checkbox:861484710898434108> Starting number: NA",
-                        f"<:empty_checkbox:861484710898434108> Interval: NA",
-                        f"<:empty_checkbox:861484710898434108> Alternate: NA",
-                        f"{self.client.Emojis['info']}Please reply with the desired **channel**."]
-        response_timeout = f"{self.client.Emojis['danger']}Setup canceled.\nTook to long to provide the required information."
-        message = await ctx.reply(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n \n{embed_field1[5]}",self.client.Blue,f"15 secconds to respond"))
-
-        #Channel
-        def check(m):
-            return m.channel == ctx.channel and m.author == user and len(m.channel_mentions) != 0
+        embed_field1 = [f"{self.client.Emojis['cogs']} **Setting up counting.**",
+                        f"{self.client.Emojis['empty_checkbox']} Channel: NA",
+                        f"{self.client.Emojis['empty_checkbox']} Starting number: NA",
+                        f"{self.client.Emojis['empty_checkbox']} Interval: NA",
+                        f"{self.client.Emojis['empty_checkbox']} Alternate: NA",
+                        f"{self.client.Emojis['empty_checkbox']} Emoji: NA",
+                        f"{self.client.Emojis['info']} Please reply with the desired **channel**."]
+        response_timeout = f"{self.client.Emojis['danger']} Setup Canceled."
+        message = await ctx.reply(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n{embed_field1[5]}\n \n{embed_field1[6]}",self.client.Blue,f"15 secconds to respond"))
         try:
-            response = await self.client.wait_for('message', check=check, timeout=15)
-        except asyncio.TimeoutError:
-            embed_field1[0] = f"<:static_cog:862507223062151168>**Counting Setup canceled**"
-            embed_field1[5] = f"{response_timeout}"
-            await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n \n{embed_field1[5]}",self.client.Blue,f""))
-            return
-        await response.delete()
-        channel = response.channel_mentions[0]
-
-        guilds = cluster.find_one({"channel": channel.id})
-        if guilds is None: insert = True
-        elif channel.id == guilds["channel"]:
-            embed_field1[5] = f"<:warning:861488027905425419>{channel.mention} has already been **set**.\n<:question_mark:861771749461196800>Alter settings for {channel.mention}? `[Yes/No]`"
-            await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n \n{embed_field1[5]}",self.client.Blue,f"15 secconds to respond"))
-            
+            #Channel
             def check(m):
-                return m.channel == ctx.channel and m.author == user and m.content in ("Yes","yes","No","no")
+                return m.channel == ctx.channel and m.author == user and len(m.channel_mentions) != 0
             try:
                 response = await self.client.wait_for('message', check=check, timeout=15)
             except asyncio.TimeoutError:
-                embed_field1[0] = f"<:static_cog:862507223062151168>**Counting Setup canceled**"
-                embed_field1[5] = f"{response_timeout}"
-                await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n \n{embed_field1[5]}",self.client.Blue,f""))
+                embed_field1[0] = f"{self.client.Emojis['static_cog']} **Counting Setup Canceled**"
+                embed_field1[6] = f"{response_timeout}"
+                await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n{embed_field1[5]}\n \n{embed_field1[6]}",self.client.Blue,f""))
                 return
-            if response.content not in ("yes","Yes"):
-                await response.delete()
-                embed_field1[5] = f"<:question_mark:861771749461196800>Remove counting from {channel.mention}? `[Yes/No]`"
-                await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n \n{embed_field1[5]}",self.client.Blue,f"15 secconds to respond"))
+            await response.delete()
+            channel = response.channel_mentions[0]
+
+            guilds = cluster.find_one({"channel": channel.id})
+            if guilds is None: insert = True
+            elif channel.id == guilds["channel"]:
+                embed_field1[6] = f"{self.client.Emojis['warning']} {channel.mention} has already been **set**.\n{self.client.Emojis['question_mark']} Remove counting from {channel.mention}? `[Yes/No]`"
+                await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n{embed_field1[5]}\n \n{embed_field1[6]}",self.client.Blue,f"15 secconds to respond"))
 
                 def check(m):
-                    return m.channel == ctx.channel and m.author == user and m.content in ("Yes","yes","No","no")
+                    return m.channel == ctx.channel and m.author == user and m.content.lower() in ("yes","no")
                 try:
                     response = await self.client.wait_for('message', check=check, timeout=15)
                 except asyncio.TimeoutError:
-                    embed_field1[0] = f"<:static_cog:862507223062151168>**Counting Setup canceled**"
-                    embed_field1[5] = f"{response_timeout}"
-                    await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n \n{embed_field1[5]}",self.client.Blue,f""))
+                    embed_field1[0] = f"{self.client.Emojis['static_cog']} **Counting Setup Canceled**"
+                    embed_field1[6] = f"{response_timeout}"
+                    await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n{embed_field1[5]}\n \n{embed_field1[6]}",self.client.Blue,f""))
                     return
-                if response.content not in ("yes","Yes"):
-                    embed_field1[0] = f"<:static_cog:862507223062151168>**Counting Setup canceled**"
-                    embed_field1[5] = f"{self.client.Emojis['danger']}Removement of counting from {channel.mention} is canceled."
-                    await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n \n{embed_field1[5]}",self.client.Blue,f""))
-                    return
-                embed_field1[0] = f"<:static_cog:862507223062151168>**Counting Setup**"
-                embed_field1[5] = f"{self.client.Emojis['info']}Counting in {channel.mention} has been removed."
-                await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n \n{embed_field1[5]}",self.client.Blue,f""))
+                if response.content.lower() != "yes":
+                    await response.delete()
+                    embed_field1[0] = f"{self.client.Emojis['static_cog']} **Counting Setup Canceled**"
+                    embed_field1[6] = f"{self.client.Emojis['danger']} Removement of counting from {channel.mention} is Canceled."
+                    await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n{embed_field1[5]}\n \n{embed_field1[6]}",self.client.Blue,f""))
                 cluster.delete_one({"channel": channel.id})
+                await response.delete()
+                embed_field1[0] = f"{self.client.Emojis['static_cog']}** Counting Setup**"
+                embed_field1[6] = f"{self.client.Emojis['info']} Counting in {channel.mention} has been removed."
+                await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n{embed_field1[5]}\n \n{embed_field1[6]}",self.client.Blue,f""))
+
+
+            #Starting number
+            embed_field1[1] = f"{self.client.Emojis['marked_checkbox']} Channel: {channel.mention}"
+            embed_field1[6] = f"{self.client.Emojis['info']} Please reply with the desired **starting number**."
+            await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n{embed_field1[5]}\n \n{embed_field1[6]}",self.client.Blue,f"15 secconds to respond"))
+
+            def check(m):
+                if m.channel == ctx.channel and m.author == user:
+                    if m.content[0] == "-" and m.content[1::].isdigit():
+                        return True
+                    else:
+                        if m.content.isdigit():
+                            return True
+                return False
+            try:
+                response = await self.client.wait_for('message', check=check, timeout=15)
+            except asyncio.TimeoutError:
+                embed_field1[0] = f"{self.client.Emojis['static_cog']} **Counting Setup Canceled**"
+                embed_field1[6] = f"{response_timeout}"
+                await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n{embed_field1[5]}\n \n{embed_field1[6]}",self.client.Blue,f""))
                 return
             await response.delete()
+            starting_number = int(response.content)
 
-        #Starting number
-        embed_field1[1] = f"<:marked_checkbox:861590371162652692> Channel: {channel.mention}"
-        embed_field1[5] = f"{self.client.Emojis['info']}Please reply with the desired **starting number**."
-        await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n \n{embed_field1[5]}",self.client.Blue,f"15 secconds to respond"))
+            #Interval
+            embed_field1[2] = f"{self.client.Emojis['marked_checkbox']} Starting number: {starting_number}"
+            embed_field1[6] = f"{self.client.Emojis['info']} Please reply with the desired **Interval**."
+            await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n{embed_field1[5]}\n \n{embed_field1[6]}",self.client.Blue,f"15 secconds to respond"))
 
-        def check(m):
-            return m.channel == ctx.channel and m.author == user and m.content[1::].isdigit() and m.content[0] == "-" or m.content[0].isdigit()
-        try:
-            response = await self.client.wait_for('message', check=check, timeout=15)
-        except asyncio.TimeoutError:
-            embed_field1[0] = f"<:static_cog:862507223062151168>**Counting Setup canceled**"
-            embed_field1[5] = f"{response_timeout}"
-            await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n \n{embed_field1[5]}",self.client.Blue,f""))
-            return
-        await response.delete()
-        starting_number = int(response.content)
+            def check(m):
+                if m.channel == ctx.channel and m.author == user:
+                    if m.content[0] == "-" and m.content[1::].isdigit():
+                        return True
+                    else:
+                        if m.content.isdigit():
+                            return True
+                return False
+            try:
+                response = await self.client.wait_for('message', check=check, timeout=15)
+            except asyncio.TimeoutError:
+                embed_field1[0] = f"{self.client.Emojis['static_cog']} **Counting Setup Canceled**"
+                embed_field1[6] = f"{response_timeout}"
+                await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n{embed_field1[5]}\n \n{embed_field1[6]}",self.client.Blue,f""))
+                return
+            await response.delete()
+            interval = int(response.content)
 
-        #Interval
-        embed_field1[2] = f"<:marked_checkbox:861590371162652692> Starting number: {starting_number}"
-        embed_field1[5] = f"{self.client.Emojis['info']}Please reply with the desired **Interval**."
-        temp = f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n \n{embed_field1[5]}"
-        await message.edit(embed = await basic_embed(f"", f"{temp}",self.client.Blue,f"15 secconds to respond"))
+            #Alternate
+            embed_field1[3] = f"{self.client.Emojis['marked_checkbox']} Interval: {interval}"
+            embed_field1[6] = f"{self.client.Emojis['info']} Please reply for **Alternate** with `[True/False]`."
+            temp = f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n{embed_field1[5]}\n \n{embed_field1[6]}"
+            await message.edit(embed = await basic_embed(f"", f"{temp}",self.client.Blue,f"15 secconds to respond"))
 
-        def check(m):
-            return m.channel == ctx.channel and m.author == user and m.content[1::].isdigit() and m.content[0] == "-" or m.content[0].isdigit()
-        try:
-            response = await self.client.wait_for('message', check=check, timeout=15)
-        except asyncio.TimeoutError:
-            embed_field1[0] = f"<:static_cog:862507223062151168>**Counting Setup canceled**"
-            embed_field1[5] = f"{response_timeout}"
-            await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n \n{embed_field1[5]}",self.client.Blue,f""))
-            return
-        await response.delete()
-        interval = int(response.content)
+            def check(m):
+                return m.channel == ctx.channel and m.author == user and m.content.lower() in ("true","false")
+            try:
+                response = await self.client.wait_for('message', check=check, timeout=15)
+            except asyncio.TimeoutError:
+                embed_field1[0] = f"{self.client.Emojis['marked_checkbox']} **Counting Setup Canceled**"
+                embed_field1[6] = f"{response_timeout}"
+                await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n{embed_field1[5]}\n \n{embed_field1[6]}",self.client.Blue,f""))
+                return
+            await response.delete()
+            alternate = str(response.content)
 
-        #Alternate
-        embed_field1[3] = f"<:marked_checkbox:861590371162652692> Interval: {interval}"
-        embed_field1[5] = f"{self.client.Emojis['info']}Please reply for **Alternate** with `[True/False]`."
-        temp = f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n \n{embed_field1[5]}"
-        await message.edit(embed = await basic_embed(f"", f"{temp}",self.client.Blue,f"15 secconds to respond"))
+            #Emoji
+            embed_field1[4] = f"{self.client.Emojis['marked_checkbox']} Alternate: {alternate}"
+            embed_field1[6] = f"{self.client.Emojis['info']} Please reply for **Emoji** with `[True/False]`."
+            await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n{embed_field1[5]}\n \n{embed_field1[6]}",self.client.Blue,f"15 secconds to respond"))
 
-        def check(m):
-            return m.channel == ctx.channel and m.author == user and m.content in ("True","False")
-        try:
-            response = await self.client.wait_for('message', check=check, timeout=15)
-        except asyncio.TimeoutError:
-            embed_field1[0] = f"<:static_cog:862507223062151168>**Counting Setup canceled**"
-            embed_field1[5] = f"{response_timeout}"
-            await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n \n{embed_field1[5]}",self.client.Blue,f""))
-            return
-        await response.delete()
-        alternate = str(response.content)
+            def check(m):
+                return m.channel == ctx.channel and m.author == user and m.content.lower() in ("true","false")
+            try:
+                response = await self.client.wait_for('message', check=check, timeout=15)
+            except asyncio.TimeoutError:
+                embed_field1[0] = f"{self.client.Emojis['marked_checkbox']} **Counting Setup Canceled**"
+                embed_field1[6] = f"{response_timeout}"
+                await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n{embed_field1[5]}\n \n{embed_field1[6]}",self.client.Blue,f""))
+                return
+            await response.delete()
+            emoji = str(response.content)
 
-        #Complete setup_edit
-        embed_field1[0] = f"<:static_cog:862507223062151168>**Counting Setup**"
-        embed_field1[4] = f"<:marked_checkbox:861590371162652692> Alternate: {alternate}"
-        embed_field1[5] = f"<a:green_check1:861578504188198912>Setup Complete."
-        temp = f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n \n{embed_field1[5]}"
-        await message.edit(embed = await basic_embed(f"", f"{temp}",self.client.Blue,f""))
 
-        #Update or insert values to MongoDB
-        if insert == True:
-            guilds = {"guild": guild.id, "channel": channel.id, "number": starting_number, "interval": interval, "alternate": alternate, "last_user": user.id}
-            cluster.insert_one(guilds)
-        else:
-            cluster.update_one({"channel":channel.id},{"$set":{"number":starting_number}})
-            cluster.update_one({"channel":channel.id},{"$set":{"interval":interval}})
-            cluster.update_one({"channel":channel.id},{"$set":{"alternate":alternate}})
+            #Completed setup
+            embed_field1[0] = f"{self.client.Emojis['static_cog']} **Counting Setup**"
+            embed_field1[5] = f"{self.client.Emojis['marked_checkbox']} Emoji: {emoji}"
+            embed_field1[6] = f"{self.client.Emojis['green_check1']} Setup Complete."
+            await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n{embed_field1[5]}\n \n{embed_field1[6]}",self.client.Blue,f""))
 
-        #Delete channel that cant be found in guild
-        list_of_guild = cluster.find({"guild": guild.id})
-        for x in list_of_guild:
-            channel_id = x["channel"]
-            found = False
-            for xx in guild.channels:
-                if channel_id == xx.id:
-                    found = True
-            if found == False:
-                cluster.delete_one({"channel": channel_id})
+            #Update or insert values to MongoDB
+            if insert == True:
+                guilds = {"guild": guild.id, "channel": channel.id, "number": starting_number, "interval": interval, "alternate": alternate, "emoji": emoji,"last_user": user.id}
+                cluster.insert_one(guilds)
+
+            #Delete channel that cant be found in guild
+            list_of_guild = cluster.find({"guild": guild.id})
+            for x in list_of_guild:
+                channel_id = x["channel"]
+                found = False
+                for xx in guild.channels:
+                    if channel_id == xx.id:
+                        found = True
+                if found == False:
+                    cluster.delete_one({"channel": channel_id})
+        except:
+            embed_field1[0] = f"{self.client.Emojis['static_cog']} **Counting Setup Canceled**"
+            embed_field1[6] = f"{self.client.Emojis['danger']} an ERROR occurred."
+            await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n{embed_field1[5]}\n \n{embed_field1[6]}",self.client.Blue,f""))
 
     #on_message counting
     @commands.Cog.listener()
@@ -206,7 +221,7 @@ class counting(commands.Cog):
             await ctx.delete()
             return
         # Check if user was previous user
-        if channels["alternate"] == "True":
+        if channels["alternate"] == "true":
             if channels["last_user"] == user.id:
                 await ctx.delete()
                 return
