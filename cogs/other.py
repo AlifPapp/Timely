@@ -1,4 +1,6 @@
 import json
+from typing import Optional
+import discord
 
 from discord import Embed
 from discord.ext import commands
@@ -22,28 +24,67 @@ class other(commands.Cog):
     # tpurge <ammount>
     @commands.command(aliases=['clear'])
     async def purge(self, ctx, amt: int = 50):
-        command_syntax = f"Syntax: {self.client.serverprefix}purge <ammount>"
         if ctx.author.guild_permissions.manage_messages:
             await ctx.message.delete()
             c = await ctx.channel.purge(limit=amt)
             await ctx.send(f"Cleared {len(c)} messages", delete_after=3)
         else:
-            await ctx.reply(embed = await basic_embed(f"", f"{self.client.Emojis['danger']} You are missing the permission `manage_messages`.",self.client.Red,f"{command_syntax}"))
+            await ctx.reply(embed = await basic_embed(f"", f"{self.client.Emojis['danger']} You are missing the permission `manage_messages`.",self.client.Red,f""))
     
     # tsendembed <json string>
     @commands.command()
-    async def send(self, ctx, *, content: str):
+    async def send(self, ctx, *, json_string: str):
         command_syntax = f"Syntax: {self.client.serverprefix}sendembed <json_string>"
         try: 
-            content = json.loads(content)
+            json_data = json.loads(json_string)
         except: 
             await ctx.reply(embed = await basic_embed(f"", f"{self.client.Emojis['danger']} Failed to load json string.",self.client.Red,f"{command_syntax}"))
             return
+        try: 
+            content = json_data['content']
+            if content == "": 
+                content = None
+        except: 
+            content = None
+        try: 
+            embed = json_data['embed']
+            if embed == "": 
+                embed = None
+        except: 
+            embed = None
+        if content is None and embed is None:
+            await ctx.reply(embed = await basic_embed(f"", f"{self.client.Emojis['danger']} Can't send an empty message.",self.client.Red,f""))
+            return
         try:
-            em = Embed().from_dict(content['embed'])
-            await ctx.send(content=content['content'], embed = em)
+            if embed is not None: 
+                embed = Embed().from_dict(embed)
+            await ctx.send(content=content, embed = embed)
         except:
-            await ctx.reply(embed = await basic_embed(f"", f"{self.client.Emojis['danger']} Failed to construct.",self.client.Red,f"{command_syntax}"))
+            await ctx.reply(embed = await basic_embed(f"", f"{self.client.Emojis['danger']} Failed to construct.",self.client.Red,f""))
+    
+    @commands.command()
+    async def lock(self, ctx, channel: Optional[discord.TextChannel], role: Optional[discord.Role]):
+        if ctx.author.guild_permissions.manage_channels:
+            channel = channel or ctx.channel
+            role = role or ctx.guild.default_role
+            overwrite = channel.overwrites_for(role)
+            overwrite.send_messages = False
+            await channel.set_permissions(role, overwrite=overwrite)
+            await ctx.reply(embed = await basic_embed(f"", f"{self.client.Emojis['lock']} Locked {channel.mention} to {role}.",self.client.Red,f""))
+        else:
+            await ctx.reply(embed = await basic_embed(f"", f"{self.client.Emojis['danger']} You are missing the permission `manage_channels`.",self.client.Red,f""))
+    
+    @commands.command()
+    async def unlock(self, ctx, channel: Optional[discord.TextChannel], role: Optional[discord.Role]):
+        if ctx.author.guild_permissions.manage_channels:
+            channel = channel or ctx.channel
+            role = role or ctx.guild.default_role
+            overwrite = channel.overwrites_for(role)
+            overwrite.send_messages = True
+            await channel.set_permissions(role, overwrite=overwrite)
+            await ctx.reply(embed = await basic_embed(f"", f"{self.client.Emojis['unlock']} Unlocked {channel.mention} to {role}.",self.client.Blue,f""))
+        else:
+            await ctx.reply(embed = await basic_embed(f"", f"{self.client.Emojis['danger']} You are missing the permission `manage_channels`.",self.client.Red,f""))
 
 #####################################################################################################################################
 def setup(client):
