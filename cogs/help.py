@@ -555,10 +555,34 @@ class help(commands.Cog):
     async def send(self, ctx):
         p = self.client.serverprefix
         em = discord.Embed(title = "Send",
-                           description = "Sends a message with the contents of your choice.\n Tip: use [this](https://leovoel.github.io/embed-visualizer/) to help construct your message.\n Note: don't use the timestamp in the example.",
+                           description = "➤Sends a message with the contents of your choice.\n・Tip: Use [this](https://leovoel.github.io/embed-visualizer/) to help construct your message.\n・Note: Don't use the timestamp in the example.",
                            colour = self.client.Green,
                            timestamp=datetime.utcnow())
         em.add_field(name="**Syntax**",value=f"`{p}send <json_string>`")
+
+        await ctx.send(embed = em)
+    
+    # thelp lock
+    @help.command()
+    async def lock(self, ctx):
+        p = self.client.serverprefix
+        em = discord.Embed(title = "Lock",
+                           description = "Locks a channel to a certain role.",
+                           colour = self.client.Green,
+                           timestamp=datetime.utcnow())
+        em.add_field(name="**Syntax**",value=f"`{p}lock [channel.mention] [role.mention]`")
+
+        await ctx.send(embed = em)
+    
+    # thelp unlock
+    @help.command()
+    async def unlock(self, ctx):
+        p = self.client.serverprefix
+        em = discord.Embed(title = "Unlock",
+                           description = "Unlocks a channel to a certain role.",
+                           colour = self.client.Green,
+                           timestamp=datetime.utcnow())
+        em.add_field(name="**Syntax**",value=f"`{p}unlock [channel.mention] [role.mention]`")
 
         await ctx.send(embed = em)
 
@@ -682,7 +706,7 @@ async def help_reddit_embed(self):
 
 async def help_other_embed(self):
     p = self.client.serverprefix
-    commands_list = sorted(["purge","send"])
+    commands_list = sorted(["purge","send","lock","unlock"])
     commands_list = f"`, `{p}".join(commands_list)
     commands_list = f"`{p}{commands_list}`"
     em = discord.Embed(title = "<:plus:897319598662254662> Other commands",
