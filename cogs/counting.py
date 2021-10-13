@@ -153,7 +153,7 @@ class counting(commands.Cog):
                 await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n{embed_field1[5]}\n \n{embed_field1[6]}",self.client.Blue,f""))
                 return
             await response.delete()
-            alternate = str(response.content)
+            alternate = str(response.content).lower()
 
             #Emoji
             embed_field1[4] = f"{self.client.Emojis['marked_checkbox']} Alternate: {alternate}"
@@ -170,7 +170,7 @@ class counting(commands.Cog):
                 await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n{embed_field1[5]}\n \n{embed_field1[6]}",self.client.Blue,f""))
                 return
             await response.delete()
-            emoji = str(response.content)
+            emoji = str(response.content).lower()
 
 
             #Completed setup
