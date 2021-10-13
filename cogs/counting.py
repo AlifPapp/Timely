@@ -89,7 +89,7 @@ class counting(commands.Cog):
                 embed_field1[0] = f"{self.client.Emojis['static_cog']}** Counting Setup**"
                 embed_field1[6] = f"{self.client.Emojis['info']} Counting in {channel.mention} has been removed."
                 await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n{embed_field1[5]}\n \n{embed_field1[6]}",self.client.Blue,f""))
-
+                return
 
             #Starting number
             embed_field1[1] = f"{self.client.Emojis['marked_checkbox']} Channel: {channel.mention}"
