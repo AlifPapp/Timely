@@ -253,7 +253,10 @@ class counting(commands.Cog):
         cluster.update_one({"id": user.id},{"$set":{"count":users["count"]+1}})
 
         # Send webhook
-        await webhook.send(content=f'{await convert_num2emoji(self, new_number, users["font"])}', username=f"{ctx.author}", avatar_url=ctx.author.avatar.url)
+        if channels["emoji"] == "true":
+            await webhook.send(content=f'{await convert_num2emoji(self, new_number, users["font"])}', username=f"{ctx.author}", avatar_url=ctx.author.avatar.url)
+        else:
+            await webhook.send(content=f'{new_number}', username=f"{ctx.author}", avatar_url=ctx.author.avatar.url)
 
     # tcountshop
     @commands.command()
