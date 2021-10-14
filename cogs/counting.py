@@ -357,7 +357,7 @@ class counting(commands.Cog):
         if users is None: 
             await ctx.reply(embed = await basic_embed("", f"{self.client.Emojis['danger']} You don't have this font.",self.client.Red,f"{command_syntax}"))
             return
-        if font in users["fonts"]:
+        if font in users["fonts"] or font == "Default":
             cluster.update_one({"id": ctx.author.id},{"$set":{"font": font}})
             if font == "Default":
                 await ctx.reply(embed = await basic_embed("Equipped!", f"You're now using the **Default** Font\n0 1 2 3 4 5 6 7 8 9",self.client.Blue,f"{command_syntax}"))
