@@ -266,7 +266,7 @@ class counting(commands.Cog):
         
         n = ""
         description = ""
-        for name in ["White","Minecraft","Magenta","Digital_Blue","Alarm_Clock","Rainbow","Blob"]: 
+        for name in ["White","Minecraft","Magenta","Black_Marker","Alarm_Clock","Rainbow","Blob"]: 
             description += f"{n}➤ **{name}** － [+{data[name]['Cost']}]({self.client.youtube})"
             description += f'\n{data[name]["Emoji_0"]}{data[name]["Emoji_1"]}{data[name]["Emoji_2"]}{data[name]["Emoji_3"]}{data[name]["Emoji_4"]}{data[name]["Emoji_5"]}{data[name]["Emoji_6"]}{data[name]["Emoji_7"]}{data[name]["Emoji_8"]}{data[name]["Emoji_9"]}'
             n = "\n\n"
@@ -310,7 +310,7 @@ class counting(commands.Cog):
     async def countbuy(self, ctx, font: str="None"):
         command_syntax = f"Syntax: {self.client.serverprefix}countbuy <font>"
         font = font.lower() 
-        if font not in ("white","minecraft","magenta","digital_blue","alarm_clock","rainbow","blob"):
+        if font not in ("white","minecraft","magenta","black_marker","alarm_clock","rainbow","blob"):
             await ctx.reply(embed = await basic_embed("", f"{self.client.Emojis['danger']} Not an existing font.",self.client.Red,f"{command_syntax}"))
             return
         try:
@@ -343,7 +343,7 @@ class counting(commands.Cog):
     async def countuse(self, ctx, font: str="None"):
         command_syntax = f"Syntax: {self.client.serverprefix}countuse <font>"
         font = font.lower() 
-        if font not in ("default","white","minecraft","magenta","digital_blue","alarm_clock","rainbow","blob"):
+        if font not in ("default","white","minecraft","magenta","black_marker","alarm_clock","rainbow","blob"):
             await ctx.reply(embed = await basic_embed("", f"{self.client.Emojis['danger']} Not an existing font.",self.client.Red,f"{command_syntax}"))
             return
         try:
