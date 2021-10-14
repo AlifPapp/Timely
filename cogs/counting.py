@@ -310,14 +310,14 @@ class counting(commands.Cog):
     async def countbuy(self, ctx, font: str="None"):
         command_syntax = f"Syntax: {self.client.serverprefix}countbuy <font>"
         font = font.lower() 
-        if font not in ("white","minecraft","magenta","black_marker","digital_blue","alarm_clock","rainbow","blob"):
+        if font not in ("white","minecraft","magenta","digital_blue","alarm_clock","rainbow","blob"):
             await ctx.reply(embed = await basic_embed("", f"{self.client.Emojis['danger']} Not an existing font.",self.client.Red,f"{command_syntax}"))
             return
         try:
             font = font.split("_")
             font = f"{font[0].capitalize()}_{font[1].capitalize()}"
         except:
-            font = font[0]
+            font = font[0].capitalize()
         cluster = self.client.mongodb["Counting"]["User"]
         users = cluster.find_one({"id": ctx.author.id})
         
@@ -343,21 +343,21 @@ class counting(commands.Cog):
     async def countuse(self, ctx, font: str="None"):
         command_syntax = f"Syntax: {self.client.serverprefix}countuse <font>"
         font = font.lower() 
-        if font not in ("default","white","minecraft","magenta","black_marker","digital_blue","alarm_clock","rainbow","blob"):
+        if font not in ("default","white","minecraft","magenta","digital_blue","alarm_clock","rainbow","blob"):
             await ctx.reply(embed = await basic_embed("", f"{self.client.Emojis['danger']} Not an existing font.",self.client.Red,f"{command_syntax}"))
             return
         try:
             font = font.split("_")
             font = f"{font[0].capitalize()}_{font[1].capitalize()}"
         except:
-            font = font[0]
+            font = font[0].capitalize()
         cluster = self.client.mongodb["Counting"]["User"]
         users = cluster.find_one({"id": ctx.author.id})
 
         if users is None: 
             await ctx.reply(embed = await basic_embed("", f"{self.client.Emojis['danger']} You don't have this font.",self.client.Red,f"{command_syntax}"))
             return
-        if font in users["fonts"] or font == "Default":
+        if font in users["fonts"]:
             cluster.update_one({"id": ctx.author.id},{"$set":{"font": font}})
             if font == "Default":
                 await ctx.reply(embed = await basic_embed("Equipped!", f"You're now using the **Default** Font\n0 1 2 3 4 5 6 7 8 9",self.client.Blue,f"{command_syntax}"))
