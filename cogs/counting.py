@@ -267,7 +267,7 @@ class counting(commands.Cog):
         n = ""
         description = ""
         for name in ["White","Minecraft","Magenta","Black_Marker","Digital_Blue","Alarm_Clock","Rainbow","Blob"]: 
-            description += f"{n}➤ **{name}** ─ [+{data[name]['Cost']}]({self.client.youtube})"
+            description += f"{n}➤ **{name}** － [+{data[name]['Cost']}]({self.client.youtube})"
             description += f'\n{data[name]["Emoji_0"]}{data[name]["Emoji_1"]}{data[name]["Emoji_2"]}{data[name]["Emoji_3"]}{data[name]["Emoji_4"]}{data[name]["Emoji_5"]}{data[name]["Emoji_6"]}{data[name]["Emoji_7"]}{data[name]["Emoji_8"]}{data[name]["Emoji_9"]}'
             n = "\n\n"
 
@@ -313,14 +313,18 @@ class counting(commands.Cog):
         if font not in ("white","minecraft","magenta","black_marker","digital_blue","alarm_clock","rainbow","blob"):
             await ctx.reply(embed = await basic_embed("", f"{self.client.Emojis['danger']} Not an existing font.",self.client.Red,f"{command_syntax}"))
             return
-        
+        try:
+            font = font.split("_")
+            font = f"{font[0].capitalize()}_{font[1].capitalize()}"
+        except:
+            font = font[0]
         cluster = self.client.mongodb["Counting"]["User"]
         users = cluster.find_one({"id": ctx.author.id})
         
         if users is None: 
             await ctx.reply(embed = await basic_embed("", f"{self.client.Emojis['danger']} Insufficient balance.",self.client.Red,f"{command_syntax}"))
             return
-        if font in str(users["fonts"]).lower().split():
+        if font in users["fonts"]:
             await ctx.reply(embed = await basic_embed("", f"{self.client.Emojis['danger']} You already have this font.",self.client.Red,f"{command_syntax}"))
             return
         
@@ -342,14 +346,18 @@ class counting(commands.Cog):
         if font not in ("default","white","minecraft","magenta","black_marker","digital_blue","alarm_clock","rainbow","blob"):
             await ctx.reply(embed = await basic_embed("", f"{self.client.Emojis['danger']} Not an existing font.",self.client.Red,f"{command_syntax}"))
             return
-        
+        try:
+            font = font.split("_")
+            font = f"{font[0].capitalize()}_{font[1].capitalize()}"
+        except:
+            font = font[0]
         cluster = self.client.mongodb["Counting"]["User"]
         users = cluster.find_one({"id": ctx.author.id})
 
         if users is None: 
             await ctx.reply(embed = await basic_embed("", f"{self.client.Emojis['danger']} You don't have this font.",self.client.Red,f"{command_syntax}"))
             return
-        if font in str(users["fonts"]).lower().split():
+        if font in users["fonts"]:
             cluster.update_one({"id": ctx.author.id},{"$set":{"font": font}})
             if font == "Default":
                 await ctx.reply(embed = await basic_embed("Equipped!", f"You're now using the **Default** Font\n0 1 2 3 4 5 6 7 8 9",self.client.Blue,f"{command_syntax}"))
@@ -359,6 +367,7 @@ class counting(commands.Cog):
             await ctx.reply(embed = await basic_embed("Equipped!", f"You're now using the font: **{font}**\n{emojis}",self.client.Blue,f"{command_syntax}"))
         else:
             await ctx.reply(embed = await basic_embed("", f"{self.client.Emojis['danger']} You don't have this font.",self.client.Red,f"{command_syntax}"))
+
 #####################################################################################################################################
 async def convert_num2emoji(self, number,emoji):
     if emoji == "Default": return number
