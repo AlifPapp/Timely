@@ -266,7 +266,7 @@ class counting(commands.Cog):
         
         n = ""
         description = ""
-        for name in ["White","Minecraft","Magenta","Black_Marker","Digital_Blue","Alarm_Clock","Rainbow","Blob"]: 
+        for name in ["White","Minecraft","Magenta","Digital_Blue","Alarm_Clock","Rainbow","Blob"]: 
             description += f"{n}➤ **{name}** － [+{data[name]['Cost']}]({self.client.youtube})"
             description += f'\n{data[name]["Emoji_0"]}{data[name]["Emoji_1"]}{data[name]["Emoji_2"]}{data[name]["Emoji_3"]}{data[name]["Emoji_4"]}{data[name]["Emoji_5"]}{data[name]["Emoji_6"]}{data[name]["Emoji_7"]}{data[name]["Emoji_8"]}{data[name]["Emoji_9"]}'
             n = "\n\n"
