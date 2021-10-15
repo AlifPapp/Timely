@@ -59,7 +59,7 @@ class currency(commands.Cog):
         await open_account(self, ctx, ctx.author)
         user = target or ctx.author
         try: user_avatar_url = user.avatar.url
-        except: user_avatar_url = ""
+        except: user_avatar_url = "https://cdn.discordapp.com/embed/avatars/0.png"
         users = cluster.find_one({"id": user.id})
         command_syntax = f"{self.client.serverprefix}profile <user>"
 
