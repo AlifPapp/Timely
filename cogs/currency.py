@@ -58,6 +58,8 @@ class currency(commands.Cog):
         cluster = self.client.mongodb["Currency"]["Main"]
         await open_account(self, ctx, ctx.author)
         user = target or ctx.author
+        try: user_avatar_url = user.avatar.url
+        except: user_avatar_url = ""
         users = cluster.find_one({"id": user.id})
         command_syntax = f"{self.client.serverprefix}profile <user>"
 
@@ -80,7 +82,7 @@ class currency(commands.Cog):
         em = discord.Embed(color = self.client.Yellow,
                            description = f"{result[0]}\n{result[1]}\n{result[2]}\n{result[3]}",
                            timestamp = datetime.utcnow())
-        em.set_author(name=f"{user.name}'s profile", icon_url = user.avatar.url)
+        em.set_author(name=f"{user.name}'s profile", icon_url = user_avatar_url)
 
         if 0 != users['pray'] or users['daily'] or users['weekly'] or users['monthly']: 
             active_cooldowns = []
