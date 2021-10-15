@@ -100,6 +100,8 @@ class information(commands.Cog):
     @commands.command(aliases=['ui'])
     async def userinfo(self, ctx, target: Optional[Member]):
         target = target or ctx.author
+        try: target_avatar_url = target.avatar.url
+        except: target_avatar_url = ""
 
         roles_string = []
         perms_string = []
@@ -171,7 +173,7 @@ class information(commands.Cog):
         em = Embed(title=f"User Info - {target}",
                    description=f"{target.mention} [{status_string}]",
                    colour=self.client.Blue)
-        em.set_thumbnail(url=target.avatar.url)
+        em.set_thumbnail(url=target_avatar_url)
 
         for name, value, inline in fields:
         	em.add_field(name=name, value=value, inline=inline)
@@ -184,16 +186,18 @@ class information(commands.Cog):
     # tavatar
     @commands.command(aliases=['av'])
     async def avatar(self, ctx, target: Optional[Member]):
-        user = target or ctx.author
-
+        target = target or ctx.author
+        try: target_avatar_url = target.avatar.url
+        except: target_avatar_url = ""
+        
         em = Embed(title=f"",
                    description=f"",
                    colour=self.client.Blue)
         
-        em.set_author(name=f"{user}'s Avatar", icon_url = user.avatar.url)
+        em.set_author(name=f"{target}'s Avatar", icon_url = target_avatar_url)
 
-        em.set_image(url=user.avatar.url)
-        em.set_footer(text=f"ID: {user.id}")
+        em.set_image(url=target_avatar_url)
+        em.set_footer(text=f"ID: {target.id}")
         em.timestamp = datetime.utcnow()
 
         await ctx.reply(embed = em)
@@ -204,9 +208,11 @@ class information(commands.Cog):
     async def serverinfo(self, ctx):
         em = Embed(title=f"",
                   colour=self.client.Blue)
+        try: guild_icon_url = ctx.guild.icon.url
+        except: guild_icon_url = ""
                 
-        em.set_thumbnail(url=ctx.guild.icon.url)
-        em.set_author(name=f"{ctx.guild.name} | Server Info", icon_url = ctx.guild.icon.url)
+        em.set_thumbnail(url=guild_icon_url)
+        em.set_author(name=f"{ctx.guild.name} | Server Info", icon_url = guild_icon_url)
 
         #Channels
         locked_channel = len([i for i in ctx.guild.text_channels if i.overwrites_for(ctx.guild.default_role).send_messages == False])
@@ -311,14 +317,15 @@ class information(commands.Cog):
     # tserveravatar
     @commands.command(aliases=["sa"])
     async def serveravatar(self, ctx):
-
+        try: guild_icon_url = ctx.guild.icon.url
+        except: guild_icon_url = ""
         em = Embed(title=f"",
                    description=f"",
                    colour=self.client.Blue)
         
-        em.set_author(name=f"Server Avatar for {ctx.guild}", icon_url = ctx.guild.icon.url)
+        em.set_author(name=f"Server Avatar for {ctx.guild}", icon_url = guild_icon_url)
 
-        em.set_image(url=ctx.guild.icon.url)
+        em.set_image(url=guild_icon_url)
         em.set_footer(text=f"ID: {ctx.guild.id}")
         em.timestamp = datetime.utcnow()
 
