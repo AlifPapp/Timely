@@ -203,6 +203,8 @@ class counting(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, ctx):
         user = ctx.author
+        try: user_avatar_url = user.avatar.url
+        except: user_avatar_url = ""
         channel = ctx.channel
         cluster = self.client.mongodb["Counting"]["Main"]
         channels = cluster.find_one({"channel": channel.id})
@@ -254,9 +256,9 @@ class counting(commands.Cog):
 
         # Send webhook
         if channels["emoji"] == "true":
-            await webhook.send(content=f'˞ {await convert_num2emoji(self, new_number, users["font"])}', username=f"{ctx.author}", avatar_url=ctx.author.avatar.url)
+            await webhook.send(content=f'˞ {await convert_num2emoji(self, new_number, users["font"])}', username=f"{ctx.author}", avatar_url=user_avatar_url)
         else:
-            await webhook.send(content=f'˞ {new_number}', username=f"{ctx.author}", avatar_url=ctx.author.avatar.url)
+            await webhook.send(content=f'˞ {new_number}', username=f"{ctx.author}", avatar_url=user_avatar_url)
 
     # tcountshop
     @commands.command()
@@ -278,6 +280,8 @@ class counting(commands.Cog):
     async def count(self, ctx, target: Optional[Member]):
         cluster = self.client.mongodb["Counting"]["User"]
         user = target or ctx.author
+        try: user_avatar_url = user.avatar.url
+        except: user_avatar_url = ""
         users = cluster.find_one({"id": user.id})
         
         if users is None: 
@@ -302,7 +306,7 @@ class counting(commands.Cog):
         em = discord.Embed(description=f"**Count:** [+{count_amt}]({self.client.youtube})\n **Fonts:** [{len(users['fonts'].split())}]({self.client.youtube}) \n{fonts}",
                            color = self.client.Blue,
                            timestamp=datetime.utcnow())
-        em.set_author(name=f"{user.name}'s count", icon_url = user.avatar.url)
+        em.set_author(name=f"{user.name}'s count", icon_url = user_avatar_url)
         await ctx.reply(embed= em)
 
     # tcountbuy <font>
