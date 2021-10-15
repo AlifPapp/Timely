@@ -204,7 +204,7 @@ class counting(commands.Cog):
     async def on_message(self, ctx):
         user = ctx.author
         try: user_avatar_url = user.avatar.url
-        except: user_avatar_url = ""
+        except: user_avatar_url = "https://cdn.discordapp.com/embed/avatars/0.png"
         channel = ctx.channel
         cluster = self.client.mongodb["Counting"]["Main"]
         channels = cluster.find_one({"channel": channel.id})
@@ -281,7 +281,7 @@ class counting(commands.Cog):
         cluster = self.client.mongodb["Counting"]["User"]
         user = target or ctx.author
         try: user_avatar_url = user.avatar.url
-        except: user_avatar_url = ""
+        except: user_avatar_url = "https://cdn.discordapp.com/embed/avatars/0.png"
         users = cluster.find_one({"id": user.id})
         
         if users is None: 
