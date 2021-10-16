@@ -87,7 +87,7 @@ class counting(commands.Cog):
                 cluster.delete_one({"channel": channel.id})
                 await response.delete()
                 embed_field1[0] = f"{self.client.Emojis['static_cog']}** Counting Setup**"
-                embed_field1[6] = f"{self.client.Emojis['info']} Counting in {channel.mention} has been removed."
+                embed_field1[6] = f"{self.client.Emojis['info']} Counting has been removed from {channel.mention}."
                 await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n{embed_field1[5]}\n \n{embed_field1[6]}",self.client.Blue,f""))
                 return
 
@@ -268,7 +268,7 @@ class counting(commands.Cog):
         
         n = ""
         description = ""
-        for name in ["White","Minecraft","Magenta","Black_Marker","Rainbow","Alarm_Clock","Blob"]: 
+        for name in ["Alarm_Clock","Blob","Rainbow","Black_Marker","Magenta","Minecraft","White"]: 
             description += f"{n}➤ **{name}** － [+{data[name]['Cost']}]({self.client.youtube})"
             description += f'\n{data[name]["Emoji_0"]}{data[name]["Emoji_1"]}{data[name]["Emoji_2"]}{data[name]["Emoji_3"]}{data[name]["Emoji_4"]}{data[name]["Emoji_5"]}{data[name]["Emoji_6"]}{data[name]["Emoji_7"]}{data[name]["Emoji_8"]}{data[name]["Emoji_9"]}'
             n = "\n\n"
