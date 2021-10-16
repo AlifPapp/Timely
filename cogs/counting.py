@@ -61,6 +61,7 @@ class counting(commands.Cog):
                 embed_field1[6] = f"{response_timeout}"
                 await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n{embed_field1[5]}\n \n{embed_field1[6]}",self.client.Blue,f""))
                 return
+            await asyncio.sleep(0.25)
             await response.delete()
             channel = response.channel_mentions[0]
 
@@ -80,11 +81,13 @@ class counting(commands.Cog):
                     await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n{embed_field1[5]}\n \n{embed_field1[6]}",self.client.Blue,f""))
                     return
                 if response.content.lower() != "yes":
+                    await asyncio.sleep(0.25)
                     await response.delete()
                     embed_field1[0] = f"{self.client.Emojis['static_cog']} **Counting Setup Canceled**"
                     embed_field1[6] = f"{self.client.Emojis['danger']} Removement of counting from {channel.mention} is Canceled."
                     await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n{embed_field1[5]}\n \n{embed_field1[6]}",self.client.Blue,f""))
                 cluster.delete_one({"channel": channel.id})
+                await asyncio.sleep(0.25)
                 await response.delete()
                 embed_field1[0] = f"{self.client.Emojis['static_cog']}** Counting Setup**"
                 embed_field1[6] = f"{self.client.Emojis['info']} Counting has been removed from {channel.mention}."
@@ -111,6 +114,7 @@ class counting(commands.Cog):
                 embed_field1[6] = f"{response_timeout}"
                 await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n{embed_field1[5]}\n \n{embed_field1[6]}",self.client.Blue,f""))
                 return
+            await asyncio.sleep(0.25)
             await response.delete()
             starting_number = int(response.content)
 
@@ -134,6 +138,7 @@ class counting(commands.Cog):
                 embed_field1[6] = f"{response_timeout}"
                 await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n{embed_field1[5]}\n \n{embed_field1[6]}",self.client.Blue,f""))
                 return
+            await asyncio.sleep(0.25)
             await response.delete()
             interval = int(response.content)
 
@@ -152,6 +157,7 @@ class counting(commands.Cog):
                 embed_field1[6] = f"{response_timeout}"
                 await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n{embed_field1[5]}\n \n{embed_field1[6]}",self.client.Blue,f""))
                 return
+            await asyncio.sleep(0.25)
             await response.delete()
             alternate = str(response.content).lower()
 
@@ -169,6 +175,7 @@ class counting(commands.Cog):
                 embed_field1[6] = f"{response_timeout}"
                 await message.edit(embed = await basic_embed(f"", f"{embed_field1[0]}\n \n{embed_field1[1]}\n{embed_field1[2]}\n{embed_field1[3]}\n{embed_field1[4]}\n{embed_field1[5]}\n \n{embed_field1[6]}",self.client.Blue,f""))
                 return
+            await asyncio.sleep(0.25)
             await response.delete()
             emoji = str(response.content).lower()
 
@@ -216,7 +223,7 @@ class counting(commands.Cog):
             # Filter out webhook from actualy bots
             if user not in list(filter(lambda m: m.bot, ctx.guild.members)):
                 return
-        
+        await asyncio.sleep(0.25)
         new_number = channels["number"] + channels["interval"]
         # Check if its the correct number
         if ctx.content != str(new_number):
