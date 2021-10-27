@@ -8,8 +8,8 @@ from pymongo import MongoClient
 from datetime import datetime
 from discord.ext import commands
 
-defaultprefix = "x"
-botishosted = False
+defaultprefix = "t"
+botishosted = True
 
 async def get_prefix(client, ctx):
     cluster = client.mongodb["Settings"]["ServerPrefix"]
