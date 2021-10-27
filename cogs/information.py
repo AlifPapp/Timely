@@ -90,7 +90,7 @@ class information(commands.Cog):
 
         em.add_field(name=f"💠Host", value=f"**OS**: `{platform.system()} ({platform.release()})`\n**Library**: `Pycord {discord.__version__}`\n**Memory Usage**: `{Vars[0]}`\n**CPU**: `{cpu_percent}%`", inline=True)
         em.add_field(name=f"🌀Stats", value=f"**Owner**: <@!416508283528937472>\n**Guilds**: `{len(self.client.guilds)}`\n**Users**: `{user_count}`\n**Shard Count**: `{self.client.shard_count}`", inline=True)
-        em.add_field(name=f"🔷This Shard ({shard_id})", value=f"**Guilds**: `{shard_servers_count}`\n**Users**: `{shard_users_count}`\n**Ping**: `{round(shard.latency, 2)}ms`", inline=True)
+        em.add_field(name=f"🔷This Shard ({shard_id})", value=f"**Guilds**: `{shard_servers_count}`\n**Users**: `{shard_users_count}`\n**Ping**: `{round(shard.latency * 1000, 2)}ms`", inline=True)
         
         em.add_field(name=f"🌐Links", value=f"**Invite me**: {Vars[1]}－{Vars[2]}\n**SupportServer**: https://discord.gg/E8DnTgMvMW", inline=False)
 
