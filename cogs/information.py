@@ -85,7 +85,7 @@ class information(commands.Cog):
                 f"[choose_perms](https://discord.com/api/oauth2/authorize?client_id={self.client.user.id}&permissions=4294967287&scope=bot%20applications.commands)"]
 
         em = Embed(title=f"Bot Information - {self.client.user}",
-                   description=f"Counter is an advanced counting bot which can manage a counting channel in your guild. With a simple setup, your channel is ready.",
+                   description=f'{self.client.user.name} is an advanced currency bot based on the movie "In Time", all the meanwhile also including many other useful features.',
                    colour=self.client.Blue)
 
         em.add_field(name=f"💠Host", value=f"**OS**: `{platform.system()} ({platform.release()})`\n**Library**: `Pycord {discord.__version__}`\n**Memory Usage**: `{Vars[0]}`\n**CPU**: `{cpu_percent}%`", inline=True)
