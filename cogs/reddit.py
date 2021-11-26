@@ -66,7 +66,7 @@ class reddit(commands.Cog):
     @commands.command(aliases=['rsearch'])
     async def redditsearch(self, ctx, subreddit):
         emoji = "<:refresh:874122192143679528>"
-        limit = 10
+        limit = 100
         
         #input arg error
         if subreddit[0:2] != "r/" or subreddit == None:
