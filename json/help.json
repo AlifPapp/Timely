@@ -1,0 +1,163 @@
+{
+    "currency":
+        {
+            "balance":
+                {"desc_short": "Shows the remaining lifespan and savings of a user.", 
+                "desc_long": "Shows the remaining lifespan and savings of a user.",
+                "usage": "balance [user]",
+                "aliases": "balance, bal"},
+            "profile":
+                {"desc_short": "Shows more extensive information on a user", 
+                "desc_long": "Shows more extensive information on a user",
+                "usage": "profile [user]",
+                "aliases": "profile"},
+            "rich":
+                {"desc_short": "Shows the richest users in the server", 
+                "desc_long": "Shows the richest users in the server",
+                "usage": "rich [page]",
+                "aliases": "rich"},
+            "globalrich":
+                {"desc_short": "Shows the richest users in all of Timely", 
+                "desc_long": "Shows the richest users in all of Timely",
+                "usage": "globalrich [page]",
+                "aliases": "globalrich"},
+            "daily":
+                {"desc_short": "Receive your daily reward", 
+                "desc_long": "Receive your daily reward",
+                "usage": "daily",
+                "aliases": "daily",
+                "cooldown": "24 hours\nEarnings: $250"},
+            "weekly":
+                {"desc_short": "Receive your weekly reward", 
+                "desc_long": "Receive your weekly reward",
+                "usage": "weekly",
+                "aliases": "weekly",
+                "cooldown": "7 days\nEarnings: $750"},
+            "monthly":
+                {"desc_short": "Receive your monthly reward", 
+                "desc_long": "Receive your monthly reward",
+                "usage": "monthly",
+                "aliases": "monthly",
+                "cooldown": "31 days\nEarnings: $2000"},
+            "card":
+                {"desc_short": "Gamble your money with another user", 
+                "desc_long": "Gamble your money with another user",
+                "usage": "card <user> <ammount>",
+                "aliases": "count, balance, bal",
+                "cooldown": "5 secconds"},
+            "slots":
+                {"desc_short": "Use the Slot Machine to gamble your money", 
+                "desc_long": "Use the Slot Machine to gamble your money",
+                "usage": "slots <ammount>",
+                "aliases": "count, balance, bal",
+                "cooldown": "5 secconds"},
+            "work":
+                {"desc_short": "Convert your lifespan into money.", 
+                "desc_long": "Convert your lifespan into money.",
+                "usage": "count [user]",
+                "aliases": "count, balance, bal",
+                "cooldown": "7 seconds"},
+            "steal":
+                {"desc_short": "Steal someone's life savings", 
+                "desc_long": "Steal someone's life savings",
+                "usage": "steal <user>",
+                "aliases": "steal, rob",
+                "cooldown": "5 minutes\nRequirements: $500\nSuccess Rate: 20%\nSteal over half: 5%\nPenalty: -5 days"},
+            "give":
+                {"desc_short": "Give someone your money", 
+                "desc_long": "Give someone your money",
+                "usage": "give <user> <amount>",
+                "aliases": "give",
+                "cooldown": "7 Seconds"},
+            "pray":
+                {"desc_short": "Beg God for good health", 
+                "desc_long": "Beg God for good health",
+                "usage": "pray [user]",
+                "aliases": "pray",
+                "cooldown": "30 seconds\nEarnings: 1-24 hours"}
+        },
+    "reddit":
+        {
+            "redditsearch":
+                {"desc_short": "Find submissions from any subreddit.", 
+                "desc_long": "Find submissions from any subreddit.",
+                "usage": "redditsearch r/<subreddit>",
+                "aliases": "redditsearch, rsearch"},
+            "redditleaderboard":
+                {"desc_short": "Find the most searched subreddit by Timely.", 
+                "desc_long": "Find the most searched subreddit by Timely.",
+                "usage": "redditleaderboard  [all/month/week/now] [page]",
+                "aliases": "redditleaderboard, rleaderboard"}
+        },
+    "informational":
+        {
+            "prefix":
+                {"desc_short": "Get the prefix of the server.", 
+                "desc_long": "Get the prefix of the server.",
+                "usage": "prefix",
+                "aliases": "prefix"},
+            "ping":
+                {"desc_short": "Test's the bot's latency.", 
+                "desc_long": "Test's the bot's latency.",
+                "usage": "ping",
+                "aliases": "ping, latency"},
+            "invite":
+                {"desc_short": "Get an invite for the bot or to the support server.", 
+                "desc_long": "Get an invite for the bot or to the support server.",
+                "usage": "invite",
+                "aliases": "invite"},
+            "vote":
+                {"desc_short": "Upvote the bot in exchange for cool rewards", 
+                "desc_long": "Upvote the bot in exchange for cool rewards",
+                "usage": "upvote",
+                "aliases": "upvote, vote"},
+            "botinfo":
+                {"desc_short": "Shows general and system information on the bot.", 
+                "desc_long": "Shows general and system information on the bot.",
+                "usage": "botinfo",
+                "aliases": "botinfo, bi"},
+            "serverinfo":
+                {"desc_short": "Returns basic information on the server.", 
+                "desc_long": "Returns basic information on the server.",
+                "usage": "serverinfo",
+                "aliases": "serverinfo, si"},
+            "serveremojis":
+                {"desc_short": "Returns a list of emojis on the server.", 
+                "desc_long": "Returns a list of emojis on the server.",
+                "usage": "serveremojis",
+                "aliases": "serveremojis, se"},
+            "serveravatar":
+                {"desc_short": "Get the prefix of the server.", 
+                "desc_long": "Get the prefix of the server.",
+                "usage": "serveravatar",
+                "aliases": "serveravatar, sa"},
+            "oldest":
+                {"desc_short": "Returns a list of oldest accounts on the server.", 
+                "desc_long": "Returns a list of oldest accounts on the server.",
+                "usage": "oldest [page]",
+                "aliases": "Prefix"},
+            "newest":
+                {"desc_short": "Returns a list of newest accounts on the server.", 
+                "desc_long": "Returns a list of newest accounts on the server.",
+                "usage": "newest [page]",
+                "aliases": "Prefix"},
+            "userinfo":
+                {"desc_short": "Get the prefix of the server.", 
+                "desc_long": "Get the prefix of the server.",
+                "usage": "userinfo [users]",
+                "aliases": "userinfo, ui"},
+            "avatar":
+                {"desc_short": "Get the prefix of the server.", 
+                "desc_long": "Get the prefix of the server.",
+                "usage": "avatar [users]",
+                "aliases": "avatar, av"}
+        },
+    "settings":
+        {
+            "changeprefix":
+                {"desc_short": "Changes the prefx for the server.", 
+                "desc_long": "Changes the prefx for the server.",
+                "usage": "changeprefix <newprefix>",
+                "aliases": "changeprefix"}
+        }
+}
