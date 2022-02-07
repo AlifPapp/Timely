@@ -12,5 +12,11 @@
         <img src="https://img.shields.io/badge/-Gmail-%23333?style=for-the-badge&logo=gmail&logoColor=white" alt="Email_Contact"></a>
 </div>
 
+**Invite:** [link](https://discord.com/api/oauth2/authorize?client_id=836198930873057290&permissions=4294967287&scope=bot%20applications.commands)
+
 ## Features
-invite: [link](https://discord.com/api/oauth2/authorize?client_id=836198930873057290&permissions=4294967287&scope=bot%20applications.commands)
+
+
+## To Do
+- [ ] Finish the Currency system
+- [ ] Add slash commands
