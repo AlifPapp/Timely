@@ -1,7 +1,0 @@
-Name:  Zseni's Lair, MemberCount: 89, GuildID: 420513434996572191
-Name:  Kermit's_world, MemberCount: 49, GuildID: 577878121215164416
-Name:  Notepad, MemberCount: 6, GuildID: 629223301599723520
-Name:  Dank Economy, MemberCount: 33, GuildID: 687142820045520955
-Name:  Dre's twitch chat, MemberCount: 24, GuildID: 763031044940234753
-Name:  TimelyBot Official, MemberCount: 29, GuildID: 835851709884530738
-Name:  Timely's Image Archive, MemberCount: 5, GuildID: 857768315216986142
