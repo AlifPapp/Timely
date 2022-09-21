@@ -1,6 +1,6 @@
 <div>
 <p align="center"><a href="https://github.com/AlifPapp/Timely-DiscordBot">
-  <img src="https://raw.githubusercontent.com/AlifPapp/Timely-DiscordBot/main/Images/Default.png" align="center" alt="Counter.ico" style="width:256px;height:256px;"></a></p>
+  <img src="https://raw.githubusercontent.com/AlifPapp/Timely/main/Images/Default.png" align="center" alt="Counter.ico" style="width:256px;height:256px;"></a></p>
 <p align="center">
     <a href="https://www.youtube.com/channel/UCsIaU94p647veKr7sy12wmA">
         <img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="Youtube"></a>
